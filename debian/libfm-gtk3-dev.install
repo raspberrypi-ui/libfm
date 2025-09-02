@@ -1,0 +1,2 @@
+usr/lib/*/libfm-gtk3.so
+usr/lib/*/pkgconfig/libfm-gtk*.pc
