@@ -73,6 +73,10 @@ typedef struct _FmConfigClass       FmConfigClass;
 #define     FM_CONFIG_DEFAULT_DEFER_CONTENT_TEST FALSE
 #define     FM_CONFIG_DEFAULT_QUICK_EXEC        FALSE
 #define     FM_CONFIG_DEFAULT_SMART_DESKTOP_AUTODROP TRUE
+#define     FM_CONFIG_DEFAULT_CUTDOWN_MENUS     FALSE
+#define     FM_CONFIG_DEFAULT_CUTDOWN_PLACES    TRUE
+#define     FM_CONFIG_DEFAULT_REAL_EXPANDERS    FALSE
+#define     FM_CONFIG_DEFAULT_GESTURES_TOUCH_ONLY FALSE
 
 #define     FM_CONFIG_DEFAULT_PLACES_HOME       TRUE
 #define     FM_CONFIG_DEFAULT_PLACES_DESKTOP    TRUE
@@ -82,6 +86,7 @@ typedef struct _FmConfigClass       FmConfigClass;
 #define     FM_CONFIG_DEFAULT_PLACES_APPLICATIONS TRUE
 #define     FM_CONFIG_DEFAULT_PLACES_NETWORK    FALSE
 #define     FM_CONFIG_DEFAULT_PLACES_UNMOUNTED  TRUE
+#define     FM_CONFIG_DEFAULT_PLACES_VOLMOUNTS  TRUE
 
 #define     FM_CONFIG_DEFAULT_AUTO_SELECTION_DELAY 600
 
@@ -194,12 +199,17 @@ struct _FmConfig
     gboolean places_computer;
     gboolean places_network;
     gboolean places_unmounted;
+    gboolean places_volmounts;
 
     gboolean only_user_templates;
     gboolean template_run_app;
     gboolean template_type_once;
     gboolean defer_content_test;
     gboolean quick_exec;
+    gboolean cutdown_menus;
+    gboolean cutdown_places;
+    gboolean real_expanders;
+    gboolean gestures_touch_only;
 
     gchar **modules_blacklist;
     gchar **modules_whitelist;
@@ -212,6 +222,7 @@ struct _FmConfig
 
     gboolean smart_desktop_autodrop;
     gchar *saved_search;
+    gchar *icon_font;
     union
     {
         gboolean date_iso_8601;

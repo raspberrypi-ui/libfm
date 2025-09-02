@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE libfm'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the libfm package.
 # Andrea Florio <andrea@opensuse.org>, 2010
-# Daniele Forsi <daniele@forsi.it>, 2012.
+# Daniele Forsi <daniele@forsi.it>, 2012
+# Emanuele Goldoni <emanuele.goldoni@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: LibFM 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 13:55+0100\n"
-"PO-Revision-Date: 2015-07-10 08:58+0000\n"
-"Last-Translator: Daniele Forsi <daniele@forsi.it>\n"
+"POT-Creation-Date: 2020-06-03 14:03+0200\n"
+"PO-Revision-Date: 2020-06-04 11:29+0200\n"
+"Last-Translator: Emanuele Goldoni <emanuele.goldoni@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.7\n"
+"X-Generator: Poedit 2.3\n"
 "X-POOTLE-MTIME: 1436518734.000000\n"
 
 #: ../data/libfm-pref-apps.desktop.in.h:1 ../data/ui/preferred-apps.glade.h:1
@@ -292,55 +293,44 @@ msgstr "---"
 msgid "None"
 msgstr "Nessuno"
 
-#. this is a directory access bit - only owner can delete a file from it
-#: ../data/ui/file-prop.glade.h:33
-#, fuzzy
-#| msgctxt ""
-#| "It is a directory access bit - 'sticky' - where only owner can delete a "
-#| "file from it"
-#| msgid "Sticky"
+#: ../data/ui/file-prop.glade.h:32
+msgctxt "It is a directory access bit - "
 msgid "Sticky"
 msgstr "Sticky"
 
-#: ../data/ui/file-prop.glade.h:34
+#: ../data/ui/file-prop.glade.h:33
 msgid "Set GID"
 msgstr "Imposta GID"
 
-#: ../data/ui/file-prop.glade.h:35
+#: ../data/ui/file-prop.glade.h:34
 msgid "Sticky & set GID"
 msgstr "Sticky e imposta GID"
 
-#. this is a file access mode bit - executable files run with permissions of owner
-#: ../data/ui/file-prop.glade.h:37
-#, fuzzy
-#| msgctxt "this is a file access mode bit, also known as 'suid'"
-#| msgid "Set UID"
+#: ../data/ui/file-prop.glade.h:35
+msgctxt "this is a file access mode bit, also known as "
 msgid "Set UID"
 msgstr "Imposta UID"
 
-#: ../data/ui/file-prop.glade.h:38
+#: ../data/ui/file-prop.glade.h:36
 msgid "Set UID & GID"
 msgstr "Imposta UID e GID"
 
-#. this is a file access mode - only owner can access the file, for others access is denied
-#: ../data/ui/file-prop.glade.h:40
-#, fuzzy
-#| msgctxt ""
-#| "this is a file access mode - only owner can access the file, for others "
-#| "access is denied"
-#| msgid "Only owner"
+#: ../data/ui/file-prop.glade.h:37
+msgctxt ""
+"this is a file access mode - only owner can access the file, for others "
+"access is denied"
 msgid "Only owner"
 msgstr "Solo il proprietario"
 
-#: ../data/ui/file-prop.glade.h:41
+#: ../data/ui/file-prop.glade.h:38
 msgid "Only owner and group"
 msgstr "Solo il proprietario e il gruppo"
 
-#: ../data/ui/file-prop.glade.h:42
+#: ../data/ui/file-prop.glade.h:39
 msgid "Anyone"
 msgstr "Chiunque"
 
-#: ../data/ui/file-prop.glade.h:43
+#: ../data/ui/file-prop.glade.h:40
 msgid "Nobody"
 msgstr "Nessuno"
 
@@ -545,9 +535,8 @@ msgid "Preparing..."
 msgstr "In preparazione..."
 
 #: ../data/ui/progress.glade.h:5
-#, fuzzy
 msgid "<b>Data transferred:</b>"
-msgstr "<b>File destinazione:</b>"
+msgstr "<b>Dati trasferiti:</b>"
 
 #: ../data/ui/progress.glade.h:6
 msgid "<b>Time remaining:</b>"
@@ -557,18 +546,16 @@ msgstr "<b>Tempo restante:</b>"
 msgid "<b>Errors occurred:</b>"
 msgstr "<b>Sono occorsi alcuni errori:</b>"
 
-#: ../src/base/fm-action.c:275
-#, fuzzy
+#: ../src/base/fm-action.c:272
 msgid "Empty value"
-msgstr "File vuoto"
+msgstr "Valore vuoto"
 
-#: ../src/base/fm-action.c:283
-#, fuzzy
+#: ../src/base/fm-action.c:280
 msgid "Invalid selection"
-msgstr "Destinazione non valida"
+msgstr "Selezione non valida"
 
 #. ---- GFile implementation ----
-#: ../src/base/fm-action.c:811 ../src/job/fm-file-ops-job.c:271
+#: ../src/base/fm-action.c:807 ../src/job/fm-file-ops-job.c:271
 #: ../src/modules/vfs-menu.c:1176 ../src/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr "Operazione non supportata"
@@ -595,22 +582,22 @@ msgstr ""
 msgid "Cannot set working directory to '%s': %s"
 msgstr "Impossibile impostare la directory di lavoro a «%s»: %s"
 
-#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1104
+#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1114
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr "Nessuna applicazione predefinita è impostata per il tipo di MIME %s"
 
-#: ../src/base/fm-path.c:179 ../src/gtk/fm-places-model.c:848
-#: ../src/gtk/fm-places-model.c:1016
+#: ../src/base/fm-path.c:179 ../src/gtk/fm-places-model.c:851
+#: ../src/gtk/fm-places-model.c:1058 ../src/gtk/fm-places-model.c:1186
 msgid "Devices"
 msgstr "Dispositivi"
 
-#: ../src/base/fm-path.c:185 ../src/gtk/fm-places-model.c:866
-#: ../src/gtk/fm-places-model.c:1031
+#: ../src/base/fm-path.c:185 ../src/gtk/fm-places-model.c:869
+#: ../src/gtk/fm-places-model.c:1068 ../src/gtk/fm-places-model.c:1201
 msgid "Network"
 msgstr "Rete"
 
-#: ../src/base/fm-path.c:1316 ../src/gtk/fm-places-model.c:898
+#: ../src/base/fm-path.c:1316 ../src/gtk/fm-places-model.c:901
 msgid "Trash Can"
 msgstr "Cestino"
 
@@ -618,7 +605,7 @@ msgstr "Cestino"
 msgid "shortcut to URI"
 msgstr "scorciatoia per URI"
 
-#: ../src/base/fm-templates.c:1043
+#: ../src/base/fm-templates.c:1053
 msgid "fm_template_create_file: invalid argument"
 msgstr "fm_template_create_file: argomento non valido"
 
@@ -665,7 +652,7 @@ msgstr "TiB"
 #: ../src/base/fm-utils.c:573
 #, c-format
 msgid "The URI subpath '%s' contains invalid escaped characters"
-msgstr "Il subpath dell'URI «%s» contiene caratteri di escape non validi"
+msgstr "Il percorso dell'URI «%s» contiene caratteri di escape non validi"
 
 #: ../src/extra/fm-xml-file.c:206
 #, c-format
@@ -760,50 +747,45 @@ msgstr "fm_xml_file_to_data: errore dati XML"
 msgid "Customize"
 msgstr "Personalizza"
 
-#: ../src/gtk/fm-app-chooser-dlg.c:234
-#: ../src/modules/gtk-fileprop-x-desktop.c:72
-msgid "Executable files"
-msgstr "File eseguibili"
-
-#: ../src/gtk/fm-app-chooser-dlg.c:326
+#: ../src/gtk/fm-app-chooser-dlg.c:325
 #, c-format
 msgid "<b>Select an application to open \"%s\" files</b>"
 msgstr "<b>Scegliere un'applicazione per aprire i file «%s»</b>"
 
-#: ../src/gtk/fm-app-menu-view.c:207
+#: ../src/gtk/fm-app-menu-view.c:208
 msgid "Installed Applications"
 msgstr "Applicazioni installate"
 
-#: ../src/gtk/fm-dir-tree-model.c:421 ../src/gtk/fm-dir-tree-model.c:1213
+#: ../src/gtk/fm-dir-tree-model.c:436 ../src/gtk/fm-dir-tree-model.c:1270
 msgid "<No subfolders>"
 msgstr "<Nessuna sottocartella>"
 
-#: ../src/gtk/fm-dir-tree-model.c:423 ../src/gtk/fm-dir-tree-model.c:1214
+#: ../src/gtk/fm-dir-tree-model.c:438 ../src/gtk/fm-dir-tree-model.c:1271
 msgid "Loading..."
 msgstr "Caricamento..."
 
-#: ../src/gtk/fm-dir-tree-view.c:546 ../src/gtk/fm-side-pane.c:647
+#: ../src/gtk/fm-dir-tree-view.c:549 ../src/gtk/fm-side-pane.c:715
 msgid "Shows tree of directories in sidebar"
 msgstr "Mostra l'albero delle directory nel riquadro laterale"
 
-#: ../src/gtk/fm-dnd-dest.c:413
+#: ../src/gtk/fm-dnd-dest.c:412
 msgid "_Cancel"
 msgstr "_Annulla"
 
-#: ../src/gtk/fm-dnd-dest.c:414
+#: ../src/gtk/fm-dnd-dest.c:413
 msgid "C_opy Here"
 msgstr "C_opia qui"
 
-#: ../src/gtk/fm-dnd-dest.c:415
+#: ../src/gtk/fm-dnd-dest.c:414
 msgid "_Move Here"
 msgstr "_Sposta qui"
 
 #. Note to translators: Link in not noun but verb here
-#: ../src/gtk/fm-dnd-dest.c:417
+#: ../src/gtk/fm-dnd-dest.c:416
 msgid "_Link Here"
 msgstr "Co_llega qui"
 
-#: ../src/gtk/fm-dnd-dest.c:880
+#: ../src/gtk/fm-dnd-dest.c:876
 msgid "XDirectSave failed."
 msgstr "XDirectSave fallito."
 
@@ -851,59 +833,58 @@ msgstr "Estrai _qui"
 msgid "E_xtract To..."
 msgstr "E_strai in..."
 
-#: ../src/gtk/fm-file-menu.c:166 ../src/gtk/fm-folder-view.c:198
+#: ../src/gtk/fm-file-menu.c:166 ../src/gtk/fm-folder-view.c:202
 msgid "Prop_erties"
 msgstr "Propri_età"
 
-#. Note to translators: Trash in not noun but verb here
-#: ../src/gtk/fm-file-menu.c:272 ../src/gtk/fm-file-menu.c:533
+#: ../src/gtk/fm-file-menu.c:259 ../src/gtk/fm-file-menu.c:307
 msgid "Move to _Trash"
 msgstr "Sposta nel ces_tino"
 
-#: ../src/gtk/fm-file-menu.c:794
+#: ../src/gtk/fm-file-menu.c:797
 msgid "Your bookmarks already have a bookmark for this folder."
 msgstr "Esiste già un segnalibro per questa cartella."
 
-#: ../src/gtk/fm-file-properties.c:369
+#: ../src/gtk/fm-file-properties.c:368
 msgid "Image files"
 msgstr "File _immagine"
 
-#: ../src/gtk/fm-file-properties.c:495 ../src/gtk/fm-file-properties.c:504
+#: ../src/gtk/fm-file-properties.c:494 ../src/gtk/fm-file-properties.c:503
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] "byte"
 msgstr[1] "byte"
 
-#: ../src/gtk/fm-file-properties.c:511
+#: ../src/gtk/fm-file-properties.c:510
 #, c-format
 msgid "scanning... %d"
 msgstr "scansione... %d"
 
-#: ../src/gtk/fm-file-properties.c:589
+#: ../src/gtk/fm-file-properties.c:588
 msgid "Please enter a valid user name or numeric id."
 msgstr "Digitare un nome utente o un id numerico valido."
 
-#: ../src/gtk/fm-file-properties.c:619
+#: ../src/gtk/fm-file-properties.c:618
 msgid "Please enter a valid group name or numeric id."
-msgstr "Per favore digita un nome gruppo o id numerico valido."
+msgstr "Digitare un nome gruppo o id numerico valido."
 
 #. FIXME: may special bits and exec flags still be messed up?
-#: ../src/gtk/fm-file-properties.c:828
+#: ../src/gtk/fm-file-properties.c:827
 msgid ""
 "Do you want to recursively apply these changes to all files and sub-folders?"
 msgstr ""
 "Applicare questi cambiamenti ricorsivamente a tutti i file e a tutte le "
 "sotto cartelle?"
 
-#: ../src/gtk/fm-file-properties.c:961
+#: ../src/gtk/fm-file-properties.c:960
 msgid "Hide or unhide the file"
 msgstr "Nasconde o mostra il file"
 
-#: ../src/gtk/fm-file-properties.c:966
+#: ../src/gtk/fm-file-properties.c:965
 msgid "This file is hidden because its name starts with a dot ('.')."
 msgstr "Questo file è nascosto perché il suo nome inizia con un punto («.»)."
 
-#: ../src/gtk/fm-file-properties.c:970
+#: ../src/gtk/fm-file-properties.c:969
 msgid ""
 "Files on this system are hidden if their name starts with a dot ('.'). Hit "
 "<Ctrl+H> to toggle displaying hidden files."
@@ -911,147 +892,155 @@ msgstr ""
 "I file su questo sistema sono nascosti se il loro nome inizia con un punto "
 "(«.»). Premere Ctrl+H per nascondere o mostrare i file nascosti."
 
-#: ../src/gtk/fm-file-properties.c:1027
+#: ../src/gtk/fm-file-properties.c:1026
 msgid "scanning..."
 msgstr "scansione..."
 
-#: ../src/gtk/fm-file-properties.c:1089
+#: ../src/gtk/fm-file-properties.c:1088
 msgid "<b>_Access content:</b>"
 msgstr "<b>_Accesso al contenuto:</b>"
 
-#: ../src/gtk/fm-file-properties.c:1240
+#: ../src/gtk/fm-file-properties.c:1239
 msgid "Files of different types"
 msgstr "File di diverso tipo"
 
-#: ../src/gtk/fm-file-properties.c:1284
+#: ../src/gtk/fm-file-properties.c:1283
 msgid "<b>File:</b>"
 msgstr "<b>File:</b>"
 
-#: ../src/gtk/fm-file-properties.c:1350
+#: ../src/gtk/fm-file-properties.c:1349
 msgid "Multiple files"
 msgstr "File multipli"
 
 #. columns visible to the users
-#: ../src/gtk/fm-folder-model.c:190
+#: ../src/gtk/fm-folder-model.c:191
 msgid "Name"
 msgstr "Nome"
 
-#: ../src/gtk/fm-folder-model.c:191
+#: ../src/gtk/fm-folder-model.c:192
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../src/gtk/fm-folder-model.c:192
+#: ../src/gtk/fm-folder-model.c:193
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../src/gtk/fm-folder-model.c:193
+#: ../src/gtk/fm-folder-model.c:194
 msgid "Permissions"
 msgstr "Permessi"
 
-#: ../src/gtk/fm-folder-model.c:194
+#: ../src/gtk/fm-folder-model.c:195
 msgid "Owner"
 msgstr "Proprietario"
 
-#: ../src/gtk/fm-folder-model.c:195
+#: ../src/gtk/fm-folder-model.c:196
 msgid "Modified"
 msgstr "Modificato"
 
-#: ../src/gtk/fm-folder-model.c:196
+#: ../src/gtk/fm-folder-model.c:197
 msgid "Location"
 msgstr "Posizione"
 
-#: ../src/gtk/fm-folder-model.c:197
+#: ../src/gtk/fm-folder-model.c:198
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../src/gtk/fm-folder-view.c:178
+#: ../src/gtk/fm-folder-view.c:180
 msgid "Create _New..."
 msgstr "Crea _nuovo..."
 
-#: ../src/gtk/fm-folder-view.c:179
+#: ../src/gtk/fm-folder-view.c:181
+msgid "New _Folder..."
+msgstr "Nuova _cartella..."
+
+#: ../src/gtk/fm-folder-view.c:182
+msgid "New Fil_e..."
+msgstr "Nuovo fil_e..."
+
+#: ../src/gtk/fm-folder-view.c:183
 msgid "Folder"
 msgstr "Cartella"
 
-#: ../src/gtk/fm-folder-view.c:182
+#: ../src/gtk/fm-folder-view.c:186
 msgid "Empty File"
 msgstr "File vuoto"
 
-#: ../src/gtk/fm-folder-view.c:194
+#: ../src/gtk/fm-folder-view.c:198
 msgid "_Invert Selection"
 msgstr "_Inverti selezione"
 
-#: ../src/gtk/fm-folder-view.c:195
+#: ../src/gtk/fm-folder-view.c:199
 msgid "_Sort Files"
 msgstr "_Ordina file"
 
-#: ../src/gtk/fm-folder-view.c:196
+#: ../src/gtk/fm-folder-view.c:200
 msgid "_Rename Folder..."
 msgstr "_Rinomina cartella..."
 
-#: ../src/gtk/fm-folder-view.c:197
+#: ../src/gtk/fm-folder-view.c:201
 msgid "Folder Prop_erties"
 msgstr "Propri_età della cartella"
 
-#: ../src/gtk/fm-folder-view.c:205
+#: ../src/gtk/fm-folder-view.c:209
 msgid "Show _Hidden"
 msgstr "Mostra _nascosti"
 
 #. Note to translators: "Mingle..." means "Do not put folders before files" but make the translation as short as possible, please!
-#: ../src/gtk/fm-folder-view.c:207
+#: ../src/gtk/fm-folder-view.c:211
 msgid "Mingle _Files and Folders"
 msgstr "Non dividere _file e cartelle"
 
-#: ../src/gtk/fm-folder-view.c:208
+#: ../src/gtk/fm-folder-view.c:212
 msgid "_Ignore Name Case"
 msgstr "_Ignora MAIUSCOLE/minuscole"
 
-#: ../src/gtk/fm-folder-view.c:219
+#: ../src/gtk/fm-folder-view.c:223
 msgid "By _Name"
 msgstr "Per _nome"
 
-#: ../src/gtk/fm-folder-view.c:220
+#: ../src/gtk/fm-folder-view.c:224
 msgid "By _Modification Time"
 msgstr "Per data di _modifica"
 
-#: ../src/gtk/fm-folder-view.c:221
+#: ../src/gtk/fm-folder-view.c:225
 msgid "By _Size"
 msgstr "Per dimen_sione"
 
-#: ../src/gtk/fm-folder-view.c:222
+#: ../src/gtk/fm-folder-view.c:226
 msgid "By File _Type"
 msgstr "Per _tipo di file"
 
-#: ../src/gtk/fm-folder-view.c:845
+#: ../src/gtk/fm-folder-view.c:849
 msgid "Enter a name for the newly created folder:"
-msgstr "Inserisci un nome per la cartella appena creata:"
+msgstr "Inserire un nome per la cartella appena creata:"
 
-#: ../src/gtk/fm-folder-view.c:846
+#: ../src/gtk/fm-folder-view.c:850
 msgid "Creating New Folder"
 msgstr "Creazione nuova cartella"
 
-#: ../src/gtk/fm-folder-view.c:859
+#: ../src/gtk/fm-folder-view.c:863
 msgid "Enter a name for empty file:"
 msgstr "Inserire un nome per il file vuoto:"
 
-#: ../src/gtk/fm-folder-view.c:860
+#: ../src/gtk/fm-folder-view.c:864
 msgid "Creating ..."
 msgstr "Creazione..."
 
-#: ../src/gtk/fm-folder-view.c:866
+#: ../src/gtk/fm-folder-view.c:870
 msgid "New"
 msgstr "Nuovo"
 
-#: ../src/gtk/fm-folder-view.c:876
+#: ../src/gtk/fm-folder-view.c:880
 #, c-format
 msgid "Enter a name for the new %s:"
 msgstr "Inserire un nome per il nuovo %s:"
 
-#: ../src/gtk/fm-folder-view.c:879
+#: ../src/gtk/fm-folder-view.c:883
 #, c-format
 msgid "Creating %s"
 msgstr "Creazione di %s"
 
-#: ../src/gtk/fm-folder-view.c:883
+#: ../src/gtk/fm-folder-view.c:887
 msgid "_Run default application on file after creation"
 msgstr "Esegui_re l'applicazione predefinita sul file dopo la creazione"
 
@@ -1076,7 +1065,7 @@ msgstr "Nessuna cartella specificata."
 
 #: ../src/gtk/fm-gtk-file-launcher.c:775 ../src/gtk/fm-gtk-utils.c:555
 msgid "Select Folder"
-msgstr "Seleziona una cartella"
+msgstr "Selezionare una cartella"
 
 #. g_message("(!) %s", msg);
 #: ../src/gtk/fm-gtk-utils.c:71
@@ -1125,11 +1114,11 @@ msgstr "Rinomina file"
 
 #: ../src/gtk/fm-gtk-utils.c:1094
 msgid "Please enter a new name:"
-msgstr "Per favore inserisci un nuovo nome:"
+msgstr "Inserire un nuovo nome:"
 
 #: ../src/gtk/fm-gtk-utils.c:1166
 msgid "Are you sure you want to empty the trash can?"
-msgstr "Sei sicuro di voler svuotare il cestino?"
+msgstr "Si è sicuri di voler svuotare il cestino?"
 
 #: ../src/gtk/fm-path-entry.c:675
 msgid "Pa_ste and Go"
@@ -1139,78 +1128,81 @@ msgstr "Incolla e vi_sita"
 msgid "Folder location bar"
 msgstr "Barra posizione cartella"
 
-#: ../src/gtk/fm-places-model.c:781 ../src/gtk/fm-places-model.c:995
+#: ../src/gtk/fm-places-model.c:784 ../src/gtk/fm-places-model.c:1047
+#: ../src/gtk/fm-places-model.c:1165
 msgid "Home Folder"
 msgstr "Cartella Home"
 
-#: ../src/gtk/fm-places-model.c:797 ../src/gtk/fm-places-model.c:1003
+#: ../src/gtk/fm-places-model.c:800 ../src/gtk/fm-places-model.c:1050
+#: ../src/gtk/fm-places-model.c:1173
 msgid "Desktop"
 msgstr "Scrivania"
 
-#: ../src/gtk/fm-places-model.c:815 ../src/gtk/fm-places-model.c:1023
-#: ../src/modules/vfs-menu.c:1538
+#: ../src/gtk/fm-places-model.c:818 ../src/gtk/fm-places-model.c:1063
+#: ../src/gtk/fm-places-model.c:1193 ../src/modules/vfs-menu.c:1538
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: ../src/gtk/fm-places-model.c:831 ../src/gtk/fm-places-model.c:1009
+#: ../src/gtk/fm-places-model.c:834 ../src/gtk/fm-places-model.c:1053
+#: ../src/gtk/fm-places-model.c:1179
 msgid "Filesystem Root"
 msgstr "Radice del file system"
 
-#: ../src/gtk/fm-places-view.c:132
+#: ../src/gtk/fm-places-view.c:131
 msgid "_Mount Volume"
 msgstr "_Monta volume"
 
-#: ../src/gtk/fm-places-view.c:133
+#: ../src/gtk/fm-places-view.c:132
 msgid "_Unmount Volume"
 msgstr "Smonta vol_ume"
 
-#: ../src/gtk/fm-places-view.c:134
+#: ../src/gtk/fm-places-view.c:133
 msgid "_Eject Removable Media"
 msgstr "_Espelli supporto rimovibile"
 
-#: ../src/gtk/fm-places-view.c:135
+#: ../src/gtk/fm-places-view.c:134
 msgid "_Format Volume"
 msgstr "_Formatta volume"
 
-#: ../src/gtk/fm-places-view.c:151
+#: ../src/gtk/fm-places-view.c:150
 msgid "_Rename Bookmark Item"
 msgstr "_Rinomina segnalibro"
 
-#: ../src/gtk/fm-places-view.c:152
+#: ../src/gtk/fm-places-view.c:151
 msgid "Re_move from Bookmarks"
 msgstr "Ri_muovi dai segnalibri"
 
-#: ../src/gtk/fm-places-view.c:153
+#: ../src/gtk/fm-places-view.c:152
 msgid "Move Bookmark _Up"
 msgstr "Sposta segnalibro s_u"
 
-#: ../src/gtk/fm-places-view.c:154
+#: ../src/gtk/fm-places-view.c:153
 msgid "Move Bookmark _Down"
 msgstr "Sposta segnalibro _giù"
 
-#: ../src/gtk/fm-places-view.c:167 ../src/modules/gtk-menu-trash.c:87
+#: ../src/gtk/fm-places-view.c:166 ../src/modules/gtk-menu-trash.c:87
 #: ../src/modules/gtk-menu-trash.c:114
 msgid "_Empty Trash Can"
 msgstr "Svuota c_estino"
 
-#: ../src/gtk/fm-places-view.c:536 ../src/gtk/fm-side-pane.c:645
+#: ../src/gtk/fm-places-view.c:538 ../src/gtk/fm-side-pane.c:713
 msgid "Shows list of common places, devices, and bookmarks in sidebar"
 msgstr ""
 "Mostra l'elenco di posti, dispositivi e segnalibri nel riquadro laterale"
 
-#: ../src/gtk/fm-places-view.c:1127
+#: ../src/gtk/fm-places-view.c:1129
 msgid "Rename Bookmark Item"
 msgstr "Rinomina segnalibro"
 
-#: ../src/gtk/fm-places-view.c:1128
+#: ../src/gtk/fm-places-view.c:1130
 msgid "Enter a new name:"
 msgstr "Inserisci un nuovo nome:"
 
-#: ../src/gtk/fm-progress-dlg.c:136
+#: ../src/gtk/fm-progress-dlg.c:135
 msgid ": "
 msgstr ": "
 
-#: ../src/gtk/fm-progress-dlg.c:214 ../src/gtk/fm-progress-dlg.c:232
+#: ../src/gtk/fm-progress-dlg.c:213 ../src/gtk/fm-progress-dlg.c:231
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1221,7 +1213,7 @@ msgstr ""
 "Dimensione: %s\n"
 "Modificato: %s"
 
-#: ../src/gtk/fm-progress-dlg.c:220 ../src/gtk/fm-progress-dlg.c:245
+#: ../src/gtk/fm-progress-dlg.c:219 ../src/gtk/fm-progress-dlg.c:244
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1230,26 +1222,25 @@ msgstr ""
 "Tipo: %s\n"
 "Modificato: %s"
 
-#: ../src/gtk/fm-progress-dlg.c:344
-#, fuzzy
+#: ../src/gtk/fm-progress-dlg.c:343
 msgid "<b>Errors occurred before file operation was stopped.</b>"
 msgstr ""
-"<b>Sono occorsi degli errori prima che l'operazione sui file fosse fermata.</"
-"b>"
+"<b>Si sono verificati degli errori prima che l'operazione sui file fosse "
+"fermata.</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:346
+#: ../src/gtk/fm-progress-dlg.c:345
 msgid "Cancelled"
 msgstr "Annullato"
 
-#: ../src/gtk/fm-progress-dlg.c:350
+#: ../src/gtk/fm-progress-dlg.c:349
 msgid "<b>The file operation was completed with errors.</b>"
 msgstr "<b>L'operazione sui file è stata completata con errori.</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:352
+#: ../src/gtk/fm-progress-dlg.c:351
 msgid "Finished"
 msgstr "Finito"
 
-#: ../src/gtk/fm-progress-dlg.c:374
+#: ../src/gtk/fm-progress-dlg.c:373
 msgid ""
 "Some files cannot be moved to trash can because the underlying file systems "
 "don't support this operation.\n"
@@ -1259,85 +1250,85 @@ msgstr ""
 "cui si trovano non supporta questa operazione.\n"
 "Vuoi invece eliminarli?"
 
-#: ../src/gtk/fm-progress-dlg.c:415 ../src/gtk/fm-progress-dlg.c:564
+#: ../src/gtk/fm-progress-dlg.c:414 ../src/gtk/fm-progress-dlg.c:563
 msgid "_Pause"
 msgstr "_Pausa"
 
-#: ../src/gtk/fm-progress-dlg.c:423
+#: ../src/gtk/fm-progress-dlg.c:422
 msgid "_Resume"
 msgstr "_Riprendi"
 
-#: ../src/gtk/fm-progress-dlg.c:598
+#: ../src/gtk/fm-progress-dlg.c:597
 msgid ", "
 msgstr ", "
 
 #. translators: it is part of "Moving files:" or "Moving xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:618
+#: ../src/gtk/fm-progress-dlg.c:617
 msgid "Moving"
 msgstr "Spostamento"
 
 #. translators: it is part of "Copying files:" or "Copying xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:622
+#: ../src/gtk/fm-progress-dlg.c:621
 msgid "Copying"
 msgstr "Copia"
 
 #. translators: it is part of "Trashing files:" or "Trashing xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:626
+#: ../src/gtk/fm-progress-dlg.c:625
 msgid "Trashing"
 msgstr "Spostamento nel cestino"
 
 #. translators: it is part of "Deleting files:" or "Deleting xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:630
+#: ../src/gtk/fm-progress-dlg.c:629
 msgid "Deleting"
 msgstr "Eliminazione"
 
 #. translators: it is part of "Creating link /path/xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:634
+#: ../src/gtk/fm-progress-dlg.c:633
 msgid "Creating link"
 msgstr "Creazione collegamento"
 
 #. translators: 'In:' string is followed by destination folder path
-#: ../src/gtk/fm-progress-dlg.c:636
+#: ../src/gtk/fm-progress-dlg.c:635
 msgid "<b>In:</b>"
 msgstr "<b>In:</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:637
+#: ../src/gtk/fm-progress-dlg.c:636
 msgid "Creating links to files"
 msgstr "Creazione collegamenti ai file"
 
 #. translators: it is part of "Changing attributes of xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:644
+#: ../src/gtk/fm-progress-dlg.c:643
 msgid "Changing attributes of"
 msgstr "Cambiamento attributi di"
 
-#: ../src/gtk/fm-progress-dlg.c:645
+#: ../src/gtk/fm-progress-dlg.c:644
 msgid "Changing attributes of files"
 msgstr "Cambiamento attributi dei file"
 
 #. translators: it is part of "Restoring files:" or "Restoring xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:651
+#: ../src/gtk/fm-progress-dlg.c:650
 msgid "Restoring"
 msgstr "Ripristino"
 
 #. note to translators: resulting string is such as "Deleting files"
-#: ../src/gtk/fm-progress-dlg.c:661
+#: ../src/gtk/fm-progress-dlg.c:660
 #, c-format
 msgid "%s files"
 msgstr "file %s"
 
 # Per convenzione Il Translator Project italiano mette o i puntini di sospensione i "in corso"
-#: ../src/gtk/fm-progress-dlg.c:664
+#: ../src/gtk/fm-progress-dlg.c:663
 msgid "<b>File operation is in progress...</b>"
 msgstr "<b>L'operazione sui file è in corso</b>"
 
 #. note to translators: resulting string is such as "Deleting file"
-#: ../src/gtk/fm-progress-dlg.c:670
+#: ../src/gtk/fm-progress-dlg.c:669
 #, c-format
 msgid "<b>%s file:</b>"
 msgstr "<b>%s file:</b>"
 
 #. note to translators: resulting string is such as "Deleting files"
-#: ../src/gtk/fm-progress-dlg.c:673
+#: ../src/gtk/fm-progress-dlg.c:672
 #, c-format
 msgid "<b>%s files:</b>"
 msgstr "<b>%s file:</b>"
@@ -1361,38 +1352,38 @@ msgid "_Remote"
 msgstr "_Remoto"
 
 # Nautilus traduce Places->Risorse
-#: ../src/gtk/fm-side-pane.c:428 ../src/gtk/fm-side-pane.c:621
+#: ../src/gtk/fm-side-pane.c:485 ../src/gtk/fm-side-pane.c:689
 msgid "Places"
 msgstr "Risorse"
 
 # Nautilus traduce Tree->Albero
-#: ../src/gtk/fm-side-pane.c:438 ../src/gtk/fm-side-pane.c:623
+#: ../src/gtk/fm-side-pane.c:495 ../src/gtk/fm-side-pane.c:691
 msgid "Directory Tree"
 msgstr "Albero directory"
 
-#: ../src/gtk/fm-standard-view.c:265
+#: ../src/gtk/fm-standard-view.c:256
 msgid "View of folder contents"
 msgstr "Vista dei contenuti della cartella"
 
-#: ../src/gtk/fm-standard-view.c:830
+#: ../src/gtk/fm-standard-view.c:828
 #, c-format
 msgid "_Hide %s"
 msgstr "_Nascondi %s"
 
-#: ../src/gtk/fm-standard-view.c:838
+#: ../src/gtk/fm-standard-view.c:836
 msgid "_Move Left"
 msgstr "Sposta a _sinistra"
 
-#: ../src/gtk/fm-standard-view.c:844
+#: ../src/gtk/fm-standard-view.c:842
 msgid "Move _Right"
 msgstr "Sposta a _destra"
 
-#: ../src/gtk/fm-standard-view.c:867
+#: ../src/gtk/fm-standard-view.c:865
 #, c-format
 msgid "Show %s"
 msgstr "Mostra %s"
 
-#: ../src/gtk/fm-standard-view.c:879
+#: ../src/gtk/fm-standard-view.c:877
 msgid "_Forget Width"
 msgstr "_Dimentica larghezza"
 
@@ -1439,7 +1430,7 @@ msgstr ""
 
 #: ../src/job/fm-file-ops-job-xfer.c:58
 msgid "Destination does not exist"
-msgstr ""
+msgstr "La destinazione non esiste"
 
 #: ../src/job/fm-file-ops-job-xfer.c:63
 msgid "Source and destination are the same."
@@ -1577,13 +1568,17 @@ msgstr "FmMenuVFileMonitor: cartella «%s» non trovata nella cache del menu"
 msgid "Search"
 msgstr "Cerca"
 
-#: ../src/modules/vfs-search.c:1053
+#: ../src/modules/vfs-search.c:1058
 msgid "Search Results"
 msgstr "Risultati della ricerca"
 
 #: ../src/modules/gtk-fileprop-x-desktop.c:66
 msgid "Choose Executable File"
 msgstr "Scegli un file eseguibile"
+
+#: ../src/modules/gtk-fileprop-x-desktop.c:72
+msgid "Executable files"
+msgstr "File eseguibili"
 
 #: ../src/modules/gtk-fileprop-x-desktop.c:267
 msgid "<b>Co_mmand:</b>"
@@ -1803,12 +1798,6 @@ msgstr "Disco MRW/W"
 #: ../src/udisks/g-udisks-device.c:60
 msgid "Blank MRW/W Disc"
 msgstr "Disco MRW/W vuoto"
-
-#: ../src/udisks/g-udisks-device.c:278
-#, fuzzy
-#| msgid "_Audio files"
-msgid "Audio CD"
-msgstr "File _audio"
 
 #: ../src/udisks/g-udisks-device.c:299
 msgid "Blank Optical Disc"

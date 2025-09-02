@@ -30,6 +30,9 @@
 #include "exo-string.h"
 #include "exo-marshal.h"
 #include "exo-private.h"
+#include "fm-gtk-utils.h"
+#include "fm-file-info.h"
+#include "fm-folder-model.h"
 
 /* libfm specific */
 #include "gtk-compat.h"
@@ -135,12 +138,18 @@ struct _ExoTreeViewPrivate
 
   /* the column which is the only activable */
   GtkTreeViewColumn* activable_column;
+
+  /* Rename */
+  gint pending_rename;
+  guint ren_timer;
+  GtkTreePath *ren_path;
 };
 
 
 
 static GObjectClass *exo_tree_view_parent_class;
 
+extern gboolean longpress;
 
 
 GType
@@ -333,7 +342,34 @@ exo_tree_view_set_property (GObject      *object,
     }
 }
 
+static gboolean list_rename_timer (gpointer data)
+{
+  ExoTreeView *tree_view = EXO_TREE_VIEW (data);
+  GtkTreeModel* model;
+  FmFileInfo* fi;
+  GtkTreeIter it;
 
+  if (tree_view->priv->ren_path)
+  {
+    model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
+    if (model && gtk_tree_model_get_iter (model, &it, tree_view->priv->ren_path))
+    {
+      gtk_tree_model_get (model, &it, FM_FOLDER_MODEL_COL_INFO, &fi, -1);
+      if (fm_file_info_can_set_name (fi) && !fm_file_info_is_shortcut (fi) && !fm_file_info_is_desktop_entry (fi))
+        fm_rename_file (GTK_WINDOW (gtk_widget_get_toplevel (data)), fm_file_info_get_path(fi));
+    }
+    gtk_tree_path_free (tree_view->priv->ren_path);
+  }
+
+  tree_view->priv->ren_path = NULL;
+  tree_view->priv->ren_timer = 0;
+  return FALSE;
+}
+
+void exo_tree_view_clear_rename (ExoTreeView *tree_view)
+{
+  tree_view->priv->pending_rename = 0;
+}
 
 static gboolean
 exo_tree_view_button_press_event (GtkWidget      *widget,
@@ -347,6 +383,13 @@ exo_tree_view_button_press_event (GtkWidget      *widget,
   GList            *lp;
   GtkTreeViewColumn* col;
   gboolean treat_as_blank = FALSE;
+
+  if (tree_view->priv->ren_timer)
+  {
+    g_source_remove (tree_view->priv->ren_timer);
+    tree_view->priv->ren_timer = 0;
+  }
+  tree_view->priv->pending_rename = 0;
 
   /* by default we won't emit "row-activated" on button-release-events */
   tree_view->priv->button_release_activates = FALSE;
@@ -410,6 +453,11 @@ exo_tree_view_button_press_event (GtkWidget      *widget,
         gtk_tree_selection_set_select_function (selection, (GtkTreeSelectionFunc) exo_noop_false, NULL, NULL);
       else
         selected_paths = gtk_tree_selection_get_selected_rows (selection, NULL);
+      if (!tree_view->priv->single_click)
+      {
+        tree_view->priv->pending_rename = 1;
+        tree_view->priv->ren_path = gtk_tree_path_copy (path);
+      }
     }
 
 #if GTK_CHECK_VERSION(2,9,0)
@@ -550,6 +598,12 @@ exo_tree_view_button_release_event (GtkWidget      *widget,
               gtk_tree_path_free (path);
             }
         }
+
+      if (tree_view->priv->pending_rename)
+      {
+        tree_view->priv->ren_timer = g_timeout_add (500, list_rename_timer, tree_view);
+        tree_view->priv->pending_rename = 0;
+      }
     }
 
 #if GTK_CHECK_VERSION(2,9,0)
@@ -589,6 +643,8 @@ exo_tree_view_motion_notify_event (GtkWidget      *widget,
   GtkTreePath *path;
   GdkCursor   *cursor;
   GtkTreeViewColumn *column;
+
+  longpress = FALSE;
 
   /* check if the event occurred on the tree view internal window and we are in single-click mode */
   if (event->window == gtk_tree_view_get_bin_window (GTK_TREE_VIEW (tree_view)) && tree_view->priv->single_click)

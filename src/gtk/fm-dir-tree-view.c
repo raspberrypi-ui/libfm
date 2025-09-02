@@ -37,6 +37,7 @@
 
 #include <glib/gi18n-lib.h>
 
+#include "fm-config.h"
 #include "fm-dir-tree-view.h"
 #include "fm-dir-tree-model.h"
 #include "fm-cell-renderer-pixbuf.h"
@@ -58,6 +59,10 @@ enum
     ITEM_POPUP,
     N_SIGNALS
 };
+
+// for gestures
+static GtkTreePath *gpath = NULL;
+static gboolean longpress = FALSE;
 
 static guint signals[N_SIGNALS];
 
@@ -198,6 +203,7 @@ static void fm_dir_tree_view_item_popup(GtkWidget *widget, GtkTreeModel *model,
     if (!gtk_widget_is_toplevel(win)) /* no parent window! is it possible? */
         return;
     file = fm_dir_tree_row_get_file_info(FM_DIR_TREE_MODEL(model), it);
+    if (!file) return;
     file_list = fm_file_info_list_new();
     fm_file_info_list_push_tail(file_list, file);
     /* use FmFileMenu here, just without extensions and disable all
@@ -447,8 +453,10 @@ static void emit_chdir_if_needed(FmDirTreeView* view, GtkTreeSelection* tree_sel
         path = fm_file_info_get_path(fi);
         if(path && view->cwd && fm_path_equal(path, view->cwd))
             return;
-        if(!fm_file_info_is_accessible(fi))
-            return;
+        char *cpath = fm_path_to_str (path);
+        gboolean accessible = (g_access(cpath, R_OK) == 0);
+        g_free (cpath);
+        if (!accessible) return;
         if(view->cwd)
             fm_path_unref(view->cwd);
         view->cwd = G_LIKELY(path) ? fm_path_ref(path) : NULL;
@@ -496,6 +504,11 @@ static void fm_dir_tree_view_dispose(GObject *object)
         g_object_unref(view->dd);
         view->dd = NULL;
     }
+    if (view->gesture)
+    {
+        g_object_unref (view->gesture);
+        view->gesture = NULL;
+    }
 
     G_OBJECT_CLASS(fm_dir_tree_view_parent_class)->dispose(object);
 }
@@ -511,6 +524,30 @@ static gboolean _fm_dir_tree_view_select_function(GtkTreeSelection *selection,
     if(!gtk_tree_model_get_iter(model, &it, path))
         return FALSE;
     return (fm_dir_tree_row_get_file_info(FM_DIR_TREE_MODEL(model), &it) != NULL);
+}
+
+static void on_dv_gesture_pressed (GtkGestureLongPress *, gdouble x, gdouble y, FmDirTreeView* fv)
+{
+    GtkTreeViewColumn* col;
+    int bx, by;
+    longpress = TRUE;
+    gtk_tree_view_convert_widget_to_bin_window_coords (GTK_TREE_VIEW (fv), x, y, &bx, &by);
+    gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (fv), bx, by, &gpath, &col, NULL, NULL);
+}
+
+static void on_dv_gesture_end (GtkGestureLongPress *, GdkEventSequence *, FmDirTreeView* fv)
+{
+    GtkTreeModel *model;
+    GtkTreeIter it;
+    if (longpress)
+    {
+        model = gtk_tree_view_get_model (GTK_TREE_VIEW (fv));
+        if (model && gtk_tree_model_get_iter (model, &it, gpath))
+                fm_dir_tree_view_item_popup (GTK_WIDGET (fv), model, &it, 0);
+    }
+    if (gpath) gtk_tree_path_free (gpath);
+    gpath = NULL;
+    longpress = FALSE;
 }
 
 static void fm_dir_tree_view_init(FmDirTreeView *view)
@@ -544,6 +581,12 @@ static void fm_dir_tree_view_init(FmDirTreeView *view)
     view->dd = fm_dnd_dest_new_with_handlers(GTK_WIDGET(view));
     obj = gtk_widget_get_accessible(GTK_WIDGET(view));
     atk_object_set_description(obj, _("Shows tree of directories in sidebar"));
+
+    view->gesture = gtk_gesture_long_press_new ((GtkWidget *)view);
+    gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (view->gesture), fm_config->gestures_touch_only);
+    g_signal_connect (view->gesture, "pressed", G_CALLBACK (on_dv_gesture_pressed), view);
+    g_signal_connect (view->gesture, "end", G_CALLBACK (on_dv_gesture_end), view);
+    gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (view->gesture), GTK_PHASE_CAPTURE);
 }
 
 /**
@@ -647,7 +690,7 @@ static void on_row_loaded(FmDirTreeModel* fm_model, GtkTreePath* tp, FmDirTreeVi
         GtkTreeSelection* ts = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
         gtk_tree_selection_select_path(ts, tp);
         gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(view), tp, NULL, TRUE, 0.5, 0.5);
-        gtk_tree_view_set_cursor(GTK_TREE_VIEW(view), tp, NULL, FALSE);
+        //gtk_tree_view_set_cursor(GTK_TREE_VIEW(view), tp, NULL, FALSE);
     }
 }
 

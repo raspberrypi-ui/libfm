@@ -205,7 +205,7 @@ static gint on_ask_rename(FmFileOpsJob* job, FmFileInfo* src, FmFileInfo* dest, 
     dest_fi = GTK_LABEL(gtk_builder_get_object(builder, "dest_fi"));
     filename = GTK_ENTRY(gtk_builder_get_object(builder, "filename"));
     apply_all = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "apply_all"));
-    gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(data->dlg));
+    gtk_window_set_transient_for(GTK_WINDOW(dlg), GTK_WINDOW(data->parent));
 
     gtk_image_set_from_gicon(src_icon, G_ICON(icon), GTK_ICON_SIZE_DIALOG);
     disp_size = fm_file_info_get_disp_size(src);
@@ -268,14 +268,16 @@ static gint on_ask_rename(FmFileOpsJob* job, FmFileInfo* src, FmFileInfo* dest, 
         gtk_widget_destroy(widget);
     }
 
-    tmp = g_filename_display_name(fm_path_get_basename(path));
+    tmp = g_filename_display_name(fm_path_display_basename(path));
     gtk_entry_set_text(filename, tmp);
     g_object_set_data_full(G_OBJECT(filename), "old_name", tmp, g_free);
     g_signal_connect(filename, "changed", G_CALLBACK(on_filename_changed), gtk_builder_get_object(builder, "rename"));
 
     g_object_unref(builder);
 
+    gtk_widget_hide (GTK_WIDGET (data->dlg));
     res = gtk_dialog_run(dlg);
+    gtk_widget_show (GTK_WIDGET (data->dlg));
     switch(res)
     {
     case RESPONSE_RENAME:

@@ -1,23 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
+# Norwegian Bokmål translation for libfm-buster
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the libfm-buster package.
+# Imre Kristoffer Eilertsen <imreeil42@gmail.com>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 13:55+0100\n"
-"PO-Revision-Date: 2019-08-22 14:42+0200\n"
+"POT-Creation-Date: 2018-04-13 00:10+0300\n"
+"PO-Revision-Date: 2020-10-01 08:55+0200\n"
 "Last-Translator: Imre Kristoffer Eilertsen <imreeil42@gmail.com>\n"
-"Language-Team: \n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-POOTLE-MTIME: 1439774902.815313\n"
+"Language-Team: \n"
 
 #: ../data/libfm-pref-apps.desktop.in.h:1 ../data/ui/preferred-apps.glade.h:1
 msgid "Preferred Applications"
@@ -287,55 +287,46 @@ msgstr "---"
 msgid "None"
 msgstr "Ingen"
 
-#. this is a directory access bit - only owner can delete a file from it
-#: ../data/ui/file-prop.glade.h:33
-#, fuzzy
-#| msgctxt ""
-#| "It is a directory access bit - 'sticky' - where only owner can delete a "
-#| "file from it"
-#| msgid "Sticky"
+#: ../data/ui/file-prop.glade.h:32
+msgctxt ""
+"It is a directory access bit - 'sticky' - where only owner can delete a file "
+"from it"
 msgid "Sticky"
 msgstr "Klister"
 
-#: ../data/ui/file-prop.glade.h:34
+#: ../data/ui/file-prop.glade.h:33
 msgid "Set GID"
 msgstr "Bestem GID"
 
-#: ../data/ui/file-prop.glade.h:35
+#: ../data/ui/file-prop.glade.h:34
 msgid "Sticky & set GID"
 msgstr "Klistre fast og bestem GID"
 
-#. this is a file access mode bit - executable files run with permissions of owner
-#: ../data/ui/file-prop.glade.h:37
-#, fuzzy
-#| msgctxt "this is a file access mode bit, also known as 'suid'"
-#| msgid "Set UID"
+#: ../data/ui/file-prop.glade.h:35
+msgctxt "this is a file access mode bit, also known as 'suid'"
 msgid "Set UID"
 msgstr "Bestem UID"
 
-#: ../data/ui/file-prop.glade.h:38
+#: ../data/ui/file-prop.glade.h:36
 msgid "Set UID & GID"
 msgstr "Bestem UID og GID"
 
-#. this is a file access mode - only owner can access the file, for others access is denied
-#: ../data/ui/file-prop.glade.h:40
-#, fuzzy
-#| msgctxt ""
-#| "this is a file access mode - only owner can access the file, for others "
-#| "access is denied"
-#| msgid "Only owner"
+#: ../data/ui/file-prop.glade.h:37
+msgctxt ""
+"this is a file access mode - only owner can access the file, for others "
+"access is denied"
 msgid "Only owner"
 msgstr "Kun eieren"
 
-#: ../data/ui/file-prop.glade.h:41
+#: ../data/ui/file-prop.glade.h:38
 msgid "Only owner and group"
 msgstr "Kun eieren og gruppen"
 
-#: ../data/ui/file-prop.glade.h:42
+#: ../data/ui/file-prop.glade.h:39
 msgid "Anyone"
 msgstr "Alle"
 
-#: ../data/ui/file-prop.glade.h:43
+#: ../data/ui/file-prop.glade.h:40
 msgid "Nobody"
 msgstr "Ingen"
 
@@ -550,42 +541,42 @@ msgstr "<b>Gjenværende tid:</b>"
 msgid "<b>Errors occurred:</b>"
 msgstr "<b>Feil oppstod:</b>"
 
-#: ../src/base/fm-action.c:275
+#: ../src/base/fm-action.c:272
 msgid "Empty value"
 msgstr "Tom verdi"
 
-#: ../src/base/fm-action.c:283
+#: ../src/base/fm-action.c:280
 msgid "Invalid selection"
 msgstr "Ugyldig utvalg"
 
 #. ---- GFile implementation ----
-#: ../src/base/fm-action.c:811 ../src/job/fm-file-ops-job.c:271
+#: ../src/base/fm-action.c:807 ../src/job/fm-file-ops-job.c:271
 #: ../src/modules/vfs-menu.c:1176 ../src/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr "Handlingen er ikke støttet"
 
-#: ../src/base/fm-file-launcher.c:88
+#: ../src/base/fm-file-launcher.c:87
 #, c-format
 msgid "Invalid desktop entry file: '%s'"
 msgstr "Ugyldig skrivebordsoppføringsfil: '%s'"
 
-#: ../src/base/fm-file-launcher.c:255 ../src/base/fm-file-launcher.c:409
+#: ../src/base/fm-file-launcher.c:253 ../src/base/fm-file-launcher.c:407
 #, c-format
 msgid "Could not determine content type of file '%s' to launch it"
 msgstr ""
 "Klarte ikke å bestemme innholdstypen til '%s'-filen for å kunne kjøre den"
 
-#: ../src/base/fm-file-launcher.c:294
+#: ../src/base/fm-file-launcher.c:292
 #, c-format
 msgid "No default application is set to launch URIs %s://"
 msgstr "Ingen forvalgte programmer er valgt til å åpne URIer %s://"
 
-#: ../src/base/fm-file-launcher.c:362
+#: ../src/base/fm-file-launcher.c:360
 #, c-format
 msgid "Cannot set working directory to '%s': %s"
 msgstr "Kan ikke sette utgangspunktmappen til '%s': %s"
 
-#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1104
+#: ../src/base/fm-file-launcher.c:454 ../src/base/fm-templates.c:1104
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr "Ingen standardprogrammer er valgt for MIME-typen %s"
@@ -749,12 +740,7 @@ msgstr "fm_xml_file_to_data: XML-datafeil"
 msgid "Customize"
 msgstr "Tilpass"
 
-#: ../src/gtk/fm-app-chooser-dlg.c:234
-#: ../src/modules/gtk-fileprop-x-desktop.c:72
-msgid "Executable files"
-msgstr "Kjørbare filer"
-
-#: ../src/gtk/fm-app-chooser-dlg.c:326
+#: ../src/gtk/fm-app-chooser-dlg.c:325
 #, c-format
 msgid "<b>Select an application to open \"%s\" files</b>"
 msgstr "<b>Velg et program å åpne «%s»-filer med</b>"
@@ -775,24 +761,24 @@ msgstr "Laster ..."
 msgid "Shows tree of directories in sidebar"
 msgstr "Viser et tre av mapper i sidelinjen"
 
-#: ../src/gtk/fm-dnd-dest.c:413
+#: ../src/gtk/fm-dnd-dest.c:412
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: ../src/gtk/fm-dnd-dest.c:414
+#: ../src/gtk/fm-dnd-dest.c:413
 msgid "C_opy Here"
 msgstr "K_opier hit"
 
-#: ../src/gtk/fm-dnd-dest.c:415
+#: ../src/gtk/fm-dnd-dest.c:414
 msgid "_Move Here"
 msgstr "_Flytt hit"
 
 #. Note to translators: Link in not noun but verb here
-#: ../src/gtk/fm-dnd-dest.c:417
+#: ../src/gtk/fm-dnd-dest.c:416
 msgid "_Link Here"
 msgstr "_Lenk hit"
 
-#: ../src/gtk/fm-dnd-dest.c:880
+#: ../src/gtk/fm-dnd-dest.c:876
 msgid "XDirectSave failed."
 msgstr "XDirectSave mislyktes."
 
@@ -853,45 +839,45 @@ msgstr "Flytt _til papirkurven"
 msgid "Your bookmarks already have a bookmark for this folder."
 msgstr "Bokmerkene dine har allerede et bokmerke for denne mappen."
 
-#: ../src/gtk/fm-file-properties.c:369
+#: ../src/gtk/fm-file-properties.c:368
 msgid "Image files"
 msgstr "Billedfiler"
 
-#: ../src/gtk/fm-file-properties.c:495 ../src/gtk/fm-file-properties.c:504
+#: ../src/gtk/fm-file-properties.c:494 ../src/gtk/fm-file-properties.c:503
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] "byte"
 msgstr[1] "bytes"
 
-#: ../src/gtk/fm-file-properties.c:511
+#: ../src/gtk/fm-file-properties.c:510
 #, c-format
 msgid "scanning... %d"
 msgstr "skanner… %d"
 
-#: ../src/gtk/fm-file-properties.c:589
+#: ../src/gtk/fm-file-properties.c:588
 msgid "Please enter a valid user name or numeric id."
 msgstr "Vennligst skriv inn et gyldig brukernavn eller numerisk ID."
 
-#: ../src/gtk/fm-file-properties.c:619
+#: ../src/gtk/fm-file-properties.c:618
 msgid "Please enter a valid group name or numeric id."
 msgstr "Vennligst skriv inn et gyldig gruppenavn eller numerisk ID."
 
 #. FIXME: may special bits and exec flags still be messed up?
-#: ../src/gtk/fm-file-properties.c:828
+#: ../src/gtk/fm-file-properties.c:827
 msgid ""
 "Do you want to recursively apply these changes to all files and sub-folders?"
 msgstr ""
 "Vil du benytte disse endringene rekursivt til alle filer og undermapper?"
 
-#: ../src/gtk/fm-file-properties.c:961
+#: ../src/gtk/fm-file-properties.c:960
 msgid "Hide or unhide the file"
 msgstr "Skjul eller vis filen"
 
-#: ../src/gtk/fm-file-properties.c:966
+#: ../src/gtk/fm-file-properties.c:965
 msgid "This file is hidden because its name starts with a dot ('.')."
 msgstr "Filen er skjult fordi dens navn begynner med et punktum ('.')."
 
-#: ../src/gtk/fm-file-properties.c:970
+#: ../src/gtk/fm-file-properties.c:969
 msgid ""
 "Files on this system are hidden if their name starts with a dot ('.'). Hit "
 "<Ctrl+H> to toggle displaying hidden files."
@@ -899,23 +885,23 @@ msgstr ""
 "Filer på dette systemet er skjult dersom navnet dens begynner med et punktum "
 "('.'). Trykk <Ctrl+H> for å skru av/på visning av skjulte filer."
 
-#: ../src/gtk/fm-file-properties.c:1027
+#: ../src/gtk/fm-file-properties.c:1026
 msgid "scanning..."
 msgstr "skanner …"
 
-#: ../src/gtk/fm-file-properties.c:1089
+#: ../src/gtk/fm-file-properties.c:1088
 msgid "<b>_Access content:</b>"
 msgstr "<b>_Tilgang til innhold:</b>"
 
-#: ../src/gtk/fm-file-properties.c:1240
+#: ../src/gtk/fm-file-properties.c:1239
 msgid "Files of different types"
 msgstr "Filer av forskjellige typer"
 
-#: ../src/gtk/fm-file-properties.c:1284
+#: ../src/gtk/fm-file-properties.c:1283
 msgid "<b>File:</b>"
 msgstr "<b>Fil:</b>"
 
-#: ../src/gtk/fm-file-properties.c:1350
+#: ../src/gtk/fm-file-properties.c:1349
 msgid "Multiple files"
 msgstr "Flere filer"
 
@@ -1144,60 +1130,60 @@ msgstr "Applikasjoner"
 msgid "Filesystem Root"
 msgstr "Filsystem-rotmappen"
 
-#: ../src/gtk/fm-places-view.c:132
+#: ../src/gtk/fm-places-view.c:131
 msgid "_Mount Volume"
 msgstr "_Montér volum"
 
-#: ../src/gtk/fm-places-view.c:133
+#: ../src/gtk/fm-places-view.c:132
 msgid "_Unmount Volume"
 msgstr "_Avmontér volum"
 
-#: ../src/gtk/fm-places-view.c:134
+#: ../src/gtk/fm-places-view.c:133
 msgid "_Eject Removable Media"
 msgstr "_Ta ut fjernbart medie"
 
-#: ../src/gtk/fm-places-view.c:135
+#: ../src/gtk/fm-places-view.c:134
 msgid "_Format Volume"
 msgstr "_Formater volumet"
 
-#: ../src/gtk/fm-places-view.c:151
+#: ../src/gtk/fm-places-view.c:150
 msgid "_Rename Bookmark Item"
 msgstr "_Gi nytt navn til bokmerkeelement"
 
-#: ../src/gtk/fm-places-view.c:152
+#: ../src/gtk/fm-places-view.c:151
 msgid "Re_move from Bookmarks"
 msgstr "Fjern fra bok_merker"
 
-#: ../src/gtk/fm-places-view.c:153
+#: ../src/gtk/fm-places-view.c:152
 msgid "Move Bookmark _Up"
 msgstr "Flytt bokmerket _opp"
 
-#: ../src/gtk/fm-places-view.c:154
+#: ../src/gtk/fm-places-view.c:153
 msgid "Move Bookmark _Down"
 msgstr "Flytt bokmerket _ned"
 
-#: ../src/gtk/fm-places-view.c:167 ../src/modules/gtk-menu-trash.c:87
+#: ../src/gtk/fm-places-view.c:166 ../src/modules/gtk-menu-trash.c:87
 #: ../src/modules/gtk-menu-trash.c:114
 msgid "_Empty Trash Can"
 msgstr "_Tøm papirkurven"
 
-#: ../src/gtk/fm-places-view.c:536 ../src/gtk/fm-side-pane.c:645
+#: ../src/gtk/fm-places-view.c:533 ../src/gtk/fm-side-pane.c:645
 msgid "Shows list of common places, devices, and bookmarks in sidebar"
 msgstr "Viser en liste over vanlige steder, enheter, og bokmerker i sidelinjen"
 
-#: ../src/gtk/fm-places-view.c:1127
+#: ../src/gtk/fm-places-view.c:1124
 msgid "Rename Bookmark Item"
 msgstr "Gi nytt navn til bokmerkeelement"
 
-#: ../src/gtk/fm-places-view.c:1128
+#: ../src/gtk/fm-places-view.c:1125
 msgid "Enter a new name:"
 msgstr "Skriv inn et nytt navn:"
 
-#: ../src/gtk/fm-progress-dlg.c:136
+#: ../src/gtk/fm-progress-dlg.c:135
 msgid ": "
 msgstr ": "
 
-#: ../src/gtk/fm-progress-dlg.c:214 ../src/gtk/fm-progress-dlg.c:232
+#: ../src/gtk/fm-progress-dlg.c:213 ../src/gtk/fm-progress-dlg.c:231
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1208,7 +1194,7 @@ msgstr ""
 "Størrelse: %s\n"
 "Endret: %s"
 
-#: ../src/gtk/fm-progress-dlg.c:220 ../src/gtk/fm-progress-dlg.c:245
+#: ../src/gtk/fm-progress-dlg.c:219 ../src/gtk/fm-progress-dlg.c:244
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1217,23 +1203,23 @@ msgstr ""
 "Type: %s\n"
 "Endret: %s"
 
-#: ../src/gtk/fm-progress-dlg.c:344
+#: ../src/gtk/fm-progress-dlg.c:343
 msgid "<b>Errors occurred before file operation was stopped.</b>"
 msgstr "<b>Feil oppstod før filhandlingen ble avbrutt.</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:346
+#: ../src/gtk/fm-progress-dlg.c:345
 msgid "Cancelled"
 msgstr "Avbrutt"
 
-#: ../src/gtk/fm-progress-dlg.c:350
+#: ../src/gtk/fm-progress-dlg.c:349
 msgid "<b>The file operation was completed with errors.</b>"
 msgstr "<b>Filhandlingen ble fullført med feil.</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:352
+#: ../src/gtk/fm-progress-dlg.c:351
 msgid "Finished"
 msgstr "Fullført"
 
-#: ../src/gtk/fm-progress-dlg.c:374
+#: ../src/gtk/fm-progress-dlg.c:373
 msgid ""
 "Some files cannot be moved to trash can because the underlying file systems "
 "don't support this operation.\n"
@@ -1243,84 +1229,84 @@ msgstr ""
 "filsystemene ikke støtter denne handlingen.\n"
 "Vil du slette dem i stedet?"
 
-#: ../src/gtk/fm-progress-dlg.c:415 ../src/gtk/fm-progress-dlg.c:564
+#: ../src/gtk/fm-progress-dlg.c:414 ../src/gtk/fm-progress-dlg.c:563
 msgid "_Pause"
 msgstr "_Sett på pause"
 
-#: ../src/gtk/fm-progress-dlg.c:423
+#: ../src/gtk/fm-progress-dlg.c:422
 msgid "_Resume"
 msgstr "_Fortsett"
 
-#: ../src/gtk/fm-progress-dlg.c:598
+#: ../src/gtk/fm-progress-dlg.c:597
 msgid ", "
 msgstr ", "
 
 #. translators: it is part of "Moving files:" or "Moving xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:618
+#: ../src/gtk/fm-progress-dlg.c:617
 msgid "Moving"
 msgstr "Flytter"
 
 #. translators: it is part of "Copying files:" or "Copying xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:622
+#: ../src/gtk/fm-progress-dlg.c:621
 msgid "Copying"
 msgstr "Kopierer"
 
 #. translators: it is part of "Trashing files:" or "Trashing xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:626
+#: ../src/gtk/fm-progress-dlg.c:625
 msgid "Trashing"
 msgstr "Kaster"
 
 #. translators: it is part of "Deleting files:" or "Deleting xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:630
+#: ../src/gtk/fm-progress-dlg.c:629
 msgid "Deleting"
 msgstr "Sletter"
 
 #. translators: it is part of "Creating link /path/xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:634
+#: ../src/gtk/fm-progress-dlg.c:633
 msgid "Creating link"
 msgstr "Oppretter lenke"
 
 #. translators: 'In:' string is followed by destination folder path
-#: ../src/gtk/fm-progress-dlg.c:636
+#: ../src/gtk/fm-progress-dlg.c:635
 msgid "<b>In:</b>"
 msgstr "<b>Er i:</b>"
 
-#: ../src/gtk/fm-progress-dlg.c:637
+#: ../src/gtk/fm-progress-dlg.c:636
 msgid "Creating links to files"
 msgstr "Oppretter lenker til filer"
 
 #. translators: it is part of "Changing attributes of xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:644
+#: ../src/gtk/fm-progress-dlg.c:643
 msgid "Changing attributes of"
 msgstr "Endrer attributtene til"
 
-#: ../src/gtk/fm-progress-dlg.c:645
+#: ../src/gtk/fm-progress-dlg.c:644
 msgid "Changing attributes of files"
 msgstr "Endrer attributtene til filer"
 
 #. translators: it is part of "Restoring files:" or "Restoring xxx.txt"
-#: ../src/gtk/fm-progress-dlg.c:651
+#: ../src/gtk/fm-progress-dlg.c:650
 msgid "Restoring"
 msgstr "Gjenoppretter"
 
 #. note to translators: resulting string is such as "Deleting files"
-#: ../src/gtk/fm-progress-dlg.c:661
+#: ../src/gtk/fm-progress-dlg.c:660
 #, c-format
 msgid "%s files"
 msgstr "%s filer"
 
-#: ../src/gtk/fm-progress-dlg.c:664
+#: ../src/gtk/fm-progress-dlg.c:663
 msgid "<b>File operation is in progress...</b>"
 msgstr "<b>Filhandling pågår...</b>"
 
 #. note to translators: resulting string is such as "Deleting file"
-#: ../src/gtk/fm-progress-dlg.c:670
+#: ../src/gtk/fm-progress-dlg.c:669
 #, c-format
 msgid "<b>%s file:</b>"
 msgstr "<b>%s fil:</b>"
 
 #. note to translators: resulting string is such as "Deleting files"
-#: ../src/gtk/fm-progress-dlg.c:673
+#: ../src/gtk/fm-progress-dlg.c:672
 #, c-format
 msgid "<b>%s files:</b>"
 msgstr "<b>%s filer:</b>"
@@ -1349,45 +1335,45 @@ msgstr "Steder"
 msgid "Directory Tree"
 msgstr "Mappetre"
 
-#: ../src/gtk/fm-standard-view.c:265
+#: ../src/gtk/fm-standard-view.c:255
 msgid "View of folder contents"
 msgstr "Visning av mappeinnhold"
 
-#: ../src/gtk/fm-standard-view.c:830
+#: ../src/gtk/fm-standard-view.c:818
 #, c-format
 msgid "_Hide %s"
 msgstr "_Skjul %s"
 
-#: ../src/gtk/fm-standard-view.c:838
+#: ../src/gtk/fm-standard-view.c:826
 msgid "_Move Left"
 msgstr "_Flytt til venstre"
 
-#: ../src/gtk/fm-standard-view.c:844
+#: ../src/gtk/fm-standard-view.c:832
 msgid "Move _Right"
 msgstr "Flytt til høy_re"
 
-#: ../src/gtk/fm-standard-view.c:867
+#: ../src/gtk/fm-standard-view.c:855
 #, c-format
 msgid "Show %s"
 msgstr "Vis %s"
 
-#: ../src/gtk/fm-standard-view.c:879
+#: ../src/gtk/fm-standard-view.c:867
 msgid "_Forget Width"
 msgstr "_Glem bredden"
 
-#: ../src/gtk/fm-standard-view.c:1876
+#: ../src/gtk/fm-standard-view.c:1859
 msgid "_Icon View"
 msgstr "_Ikonvisning"
 
-#: ../src/gtk/fm-standard-view.c:1877
+#: ../src/gtk/fm-standard-view.c:1860
 msgid "_Compact View"
 msgstr "_Kompakt visning"
 
-#: ../src/gtk/fm-standard-view.c:1878
+#: ../src/gtk/fm-standard-view.c:1861
 msgid "_Thumbnail View"
 msgstr "_Miniatyrbildevisning"
 
-#: ../src/gtk/fm-standard-view.c:1879
+#: ../src/gtk/fm-standard-view.c:1862
 msgid "Detailed _List View"
 msgstr "Detaljert _listevisning"
 
@@ -1560,6 +1546,10 @@ msgstr "Søkeresultater"
 #: ../src/modules/gtk-fileprop-x-desktop.c:66
 msgid "Choose Executable File"
 msgstr "Velg en kjørbar fil"
+
+#: ../src/modules/gtk-fileprop-x-desktop.c:72
+msgid "Executable files"
+msgstr "Kjørbare filer"
 
 #: ../src/modules/gtk-fileprop-x-desktop.c:267
 msgid "<b>Co_mmand:</b>"
@@ -1779,12 +1769,6 @@ msgstr "MRW/W-disk"
 #: ../src/udisks/g-udisks-device.c:60
 msgid "Blank MRW/W Disc"
 msgstr "Blank MRW/W-disk"
-
-#: ../src/udisks/g-udisks-device.c:278
-#, fuzzy
-#| msgid "_Audio files"
-msgid "Audio CD"
-msgstr "_Lydfiler"
 
 #: ../src/udisks/g-udisks-device.c:299
 msgid "Blank Optical Disc"

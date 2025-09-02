@@ -100,6 +100,8 @@
 
 static const char folder_popup_xml[] =
 "<popup>"
+  "<menuitem action='CreateNewFolder'/>"
+  "<menuitem action='CreateNewFile'/>"
   "<menu action='CreateNew'>"
     "<menuitem action='NewFolder'/>"
     /* placeholder for ~/Templates support */
@@ -167,7 +169,7 @@ static void on_invert_select(GtkAction* act, FmFolderView* fv);
 static void on_rename(GtkAction* act, FmFolderView* fv);
 static void on_prop(GtkAction* act, FmFolderView* fv);
 static void on_file_prop(GtkAction* act, FmFolderView* fv);
-static void on_menu(GtkAction* act, FmFolderView* fv);
+static void on_menu(GtkAction* act, FmFolderView* fv, int x, int y);
 static void on_file_menu(GtkAction* act, FmFolderView* fv);
 static void on_show_hidden(GtkToggleAction* act, FmFolderView* fv);
 static void on_mingle_dirs(GtkToggleAction* act, FmFolderView* fv);
@@ -176,6 +178,8 @@ static void on_ignore_case(GtkToggleAction* act, FmFolderView* fv);
 static const GtkActionEntry folder_popup_actions[]=
 {
     {"CreateNew", NULL, N_("Create _New..."), NULL, NULL, NULL},
+    {"CreateNewFolder", "folder", N_("New _Folder..."), "<Ctrl><Shift>N", NULL, G_CALLBACK(on_create_new)},
+    {"CreateNewFile", NULL, N_("New Fil_e..."), "<Ctrl><Alt>N", NULL, G_CALLBACK(on_create_new)},
     {"NewFolder", "folder", N_("Folder"), "<Ctrl><Shift>N", NULL, G_CALLBACK(on_create_new)},
     {"NewFolder2", NULL, NULL, "Insert", NULL, G_CALLBACK(on_create_new)},
     {"NewFolder3", NULL, NULL, "KP_Insert", NULL, G_CALLBACK(on_create_new)},
@@ -839,7 +843,7 @@ static void on_create_new(GtkAction* act, FmFolderView* fv)
     gint n;
 
     g_return_if_fail(ui != NULL);
-    if(strncmp(name, "NewFolder", 9) == 0)
+    if(strstr(name, "NewFolder"))
     {
         templ = NULL;
         prompt = _("Enter a name for the newly created folder:");
@@ -853,7 +857,7 @@ static void on_create_new(GtkAction* act, FmFolderView* fv)
             return; /* invalid action name, is it possible? */
     }
     /* special option 'NewBlank' */
-    else if(G_LIKELY(strcmp(name, "NewBlank") == 0))
+    else if(G_LIKELY(strcmp(name, "NewBlank") == 0) || G_LIKELY(strcmp(name, "CreateNewFile") == 0))
     {
         templ = NULL;
         prompt = _("Enter a name for empty file:");
@@ -1126,14 +1130,20 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
         *y = mr.y;
     }
     /* position menu inside widget */
+#if GTK_CHECK_VERSION(3, 0, 0)
+    *x += x2;
+    *y += y2;
+#endif
     if(rtl) /* RTL */
         x2 = CLAMP(x2, a.x + 1, a.x + ma.width + a.width - 1);
     else /* LTR */
         x2 = CLAMP(x2, a.x + 1 - ma.width, a.x + a.width - 1);
     y2 = CLAMP(y2, a.y + 1 - ma.height, a.y + a.height - 1);
     /* calculate desired position for menu */
+#if !GTK_CHECK_VERSION(3, 0, 0)
     *x += x2;
     *y += y2;
+#endif
     /* get monitor geometry at the pointer: for desktop we already have it */
     if (parent_window)
     {
@@ -1162,7 +1172,7 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
         *y = MAX(mr.y, *y); /* place menu below cursor */
 }
 
-static void on_menu(GtkAction* act, FmFolderView* fv)
+static void on_menu(GtkAction* act, FmFolderView* fv, int x, int y)
 {
     GtkUIManager *ui = g_object_get_qdata(G_OBJECT(fv), ui_quark);
     GtkMenu *popup = g_object_get_qdata(G_OBJECT(fv), popup_quark);
@@ -1192,9 +1202,11 @@ static void on_menu(GtkAction* act, FmFolderView* fv)
     act = gtk_ui_manager_get_action(ui, "/popup/Sort/SortIgnoreCase");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act),
                                  (mode & FM_SORT_CASE_SENSITIVE) == 0);
+    if (fm_config->cutdown_menus) gtk_action_set_visible (act, FALSE);
     act = gtk_ui_manager_get_action(ui, "/popup/Sort/MingleDirs");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act),
                                  (mode & FM_SORT_NO_FOLDER_FIRST) != 0);
+    if (fm_config->cutdown_menus) gtk_action_set_visible (act, FALSE);
     show_hidden = iface->get_show_hidden(fv);
     act = gtk_ui_manager_get_action(ui, "/popup/ShowHidden");
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), show_hidden);
@@ -1217,6 +1229,9 @@ static void on_menu(GtkAction* act, FmFolderView* fv)
         act = gtk_ui_manager_get_action(ui, "/popup/Prop");
         gtk_action_set_visible(act, FALSE);
     }
+    act = gtk_ui_manager_get_action(ui, "/popup/Prop");
+    if (fm_config->cutdown_menus) gtk_action_set_visible (act, FALSE);
+
     /* prepare templates list */
     templates = g_object_get_qdata(G_OBJECT(ui), templates_quark);
     /* FIXME: updating context menu is not lightweight here - we should
@@ -1224,10 +1239,32 @@ static void on_menu(GtkAction* act, FmFolderView* fv)
        That will take some time, memory and may be error-prone as well.
        For simplicity we create it once here but if users will find
        any inconveniences this behavior should be changed later. */
-    if(fi == NULL || !fm_file_info_is_writable_directory(fi))
+    if (fm_config->cutdown_menus)
     {
         act = gtk_ui_manager_get_action(ui, "/popup/CreateNew");
         gtk_action_set_visible(act, FALSE);
+    }
+    else
+    {
+        act = gtk_ui_manager_get_action(ui, "/popup/CreateNewFolder");
+        gtk_action_set_visible(act, FALSE);
+        act = gtk_ui_manager_get_action(ui, "/popup/CreateNewFile");
+        gtk_action_set_visible(act, FALSE);
+    }
+    if(fi == NULL || !fm_file_info_is_writable_directory(fi))
+    {
+        if (fm_config->cutdown_menus)
+        {
+            act = gtk_ui_manager_get_action(ui, "/popup/CreateNewFolder");
+            gtk_action_set_visible(act, FALSE);
+            act = gtk_ui_manager_get_action(ui, "/popup/CreateNewFile");
+            gtk_action_set_visible(act, FALSE);
+        }
+        else
+        {
+            act = gtk_ui_manager_get_action(ui, "/popup/CreateNew");
+            gtk_action_set_visible(act, FALSE);
+        }
     }
     else if(!templates)
     {
@@ -1283,8 +1320,15 @@ static void on_menu(GtkAction* act, FmFolderView* fv)
 
     /* open popup */
     gtk_ui_manager_ensure_update(ui);
-    gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                   gtk_get_current_event_time());
+    //gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
+    //               gtk_get_current_event_time());
+    if (x == -1 || y == -1)
+    gtk_menu_popup_at_pointer (popup, NULL);
+    else
+    {
+        GdkRectangle rect = {x, y, 0, 0};
+        gtk_menu_popup_at_rect (popup, gtk_widget_get_window (GTK_WIDGET (fv)), &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST, NULL);
+    }
 }
 
 /* handle 'Menu' and 'Shift+F10' here */
@@ -1299,7 +1343,7 @@ static gboolean on_key_press(GtkWidget *widget, GdkEventKey *evt, FmFolderView* 
     }
     else if(evt->keyval == GDK_KEY_Menu && modifier == GDK_CONTROL_MASK)
     {
-        on_menu(NULL, fv);
+        on_menu(NULL, fv, -1, -1);
         return TRUE;
     }
     return FALSE;
@@ -1397,8 +1441,9 @@ static void on_file_menu(GtkAction* act, FmFolderView* fv)
         iface->get_custom_menu_callbacks(fv, &update_popup, &open_folders);
         popup = _make_file_menu(fv, win, update_popup, open_folders, files);
         fm_file_info_list_unref(files);
-        gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                       gtk_get_current_event_time());
+        //gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
+        //               gtk_get_current_event_time());
+        gtk_menu_popup_at_pointer (popup, NULL);
     }
 }
 
@@ -1466,6 +1511,11 @@ static void on_change_type(GtkRadioAction* act, GtkRadioAction* cur, FmFolderVie
     }
 }
 
+static void remove_popup (gpointer popup, GObject *)
+{
+    if (popup && gtk_menu_get_attach_widget (popup)) gtk_menu_detach (popup);
+}
+
 static void on_ui_destroy(gpointer ui_ptr)
 {
     GtkUIManager* ui = (GtkUIManager*)ui_ptr;
@@ -1477,7 +1527,7 @@ static void on_ui_destroy(gpointer ui_ptr)
 
     if (win != NULL) /* it might be already destroyed */
     {
-        g_object_weak_unref(G_OBJECT(win), (GWeakNotify)gtk_menu_detach, popup);
+        g_object_weak_unref(G_OBJECT(win), (GWeakNotify)remove_popup, popup);
         groups = gtk_accel_groups_from_object(G_OBJECT(win));
         if(g_slist_find(groups, accel_grp) != NULL)
             gtk_window_remove_accel_group(GTK_WINDOW(win), accel_grp);
@@ -1585,7 +1635,7 @@ GtkMenu* fm_folder_view_add_popup(FmFolderView* fv, GtkWindow* parent,
     accel_grp = gtk_ui_manager_get_accel_group(ui);
     gtk_window_add_accel_group(parent, accel_grp);
     gtk_menu_attach_to_widget(popup, GTK_WIDGET(parent), NULL);
-    g_object_weak_ref(G_OBJECT(parent), (GWeakNotify)gtk_menu_detach, popup);
+    g_object_weak_ref(G_OBJECT(parent), (GWeakNotify)remove_popup, popup);
     g_object_unref(act_grp);
     g_object_set_qdata_full(G_OBJECT(fv), ui_quark, ui, on_ui_destroy);
     /* we bind popup to ui so don't handle qdata change here */
@@ -1725,7 +1775,7 @@ void fm_folder_view_set_active(FmFolderView* fv, gboolean set)
  * Since: 1.0.1
  */
 void fm_folder_view_item_clicked(FmFolderView* fv, GtkTreePath* path,
-                                 FmFolderViewClickType type)
+                                 FmFolderViewClickType type, gint icon_or_label, gint x, gint y)
 {
     FmFolderViewInterface* iface;
     GtkTreeModel* model;
@@ -1766,6 +1816,12 @@ void fm_folder_view_item_clicked(FmFolderView* fv, GtkTreePath* path,
             files = fm_file_info_list_new();
             fm_file_info_list_push_tail(files, fi);
         }
+        if (icon_or_label)
+        {
+            if (fm_file_info_can_set_name(fi) && !fm_file_info_is_shortcut(fi) && !fm_file_info_is_desktop_entry(fi))
+                fm_rename_file(GTK_WINDOW(win), fm_file_info_get_path(fi));
+        }
+        else
         fm_launch_files_simple(win, NULL, fm_file_info_list_peek_head_link(files),
                                open_folders, win);
         fm_file_info_list_unref(files);
@@ -1777,11 +1833,18 @@ void fm_folder_view_item_clicked(FmFolderView* fv, GtkTreePath* path,
             files = iface->dup_selected_files(fv);
             popup = _make_file_menu(fv, win, update_popup, open_folders, files);
             fm_file_info_list_unref(files);
-            gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                           gtk_get_current_event_time());
+            if (x == -1 || y == -1)
+            //gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
+            //               gtk_get_current_event_time());
+            gtk_menu_popup_at_pointer (popup, NULL);
+            else
+            {
+                GdkRectangle rect = {x, y, 0, 0};
+                gtk_menu_popup_at_rect (popup, gtk_widget_get_window (GTK_WIDGET (fv)), &rect, GDK_GRAVITY_CENTER, GDK_GRAVITY_NORTH_WEST, NULL);
+            }
         }
         else /* no files are selected. Show context menu of current folder. */
-            on_menu(NULL, fv);
+            on_menu(NULL, fv, x, y);
         break;
     default: ;
     }

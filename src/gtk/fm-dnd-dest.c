@@ -948,6 +948,9 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
     if(target == dest_target_atom[FM_DND_DEST_TARGET_XDS])
         return gdk_drag_context_get_suggested_action(drag_context);
 
+    // I can see no way this mess of caching code is going to do the right thing in every situation. So force the issue...
+    gtk_drag_get_data (dd->widget, drag_context, target, time(NULL));
+
     if(!dest || !(dest_path = fm_file_info_get_path(dest)))
         /* query drag sources in any case */
         goto query_sources;

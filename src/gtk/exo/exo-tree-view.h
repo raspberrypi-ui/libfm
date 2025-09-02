@@ -97,6 +97,8 @@ GtkTreeViewColumn* exo_tree_view_get_activable_column( ExoTreeView *tree_view );
 void               exo_tree_view_set_activable_column( ExoTreeView *tree_view,
                                                        GtkTreeViewColumn* column );
 
+void       exo_tree_view_clear_rename (ExoTreeView *tree_view);
+
 G_END_DECLS;
 
 #endif /* !__EXO_TREE_VIEW_H__ */
