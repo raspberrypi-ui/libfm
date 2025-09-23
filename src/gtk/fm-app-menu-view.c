@@ -174,7 +174,7 @@ GtkTreeView *fm_app_menu_view_new(void)
 
         /* ensure that we're using lxmenu-data */
         oldenv = g_strdup(g_getenv("XDG_MENU_PREFIX"));
-        g_setenv("XDG_MENU_PREFIX", "lxde-", TRUE);
+        //g_setenv("XDG_MENU_PREFIX", "lxde-", TRUE);
         menu_cache = menu_cache_lookup("applications.menu");
         if(oldenv)
         {
