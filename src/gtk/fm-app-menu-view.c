@@ -73,7 +73,7 @@ static void destroy_store(gpointer user_data, GObject *obj)
 }
 
 /* called with lock held */
-static void add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
+static gboolean add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
 {
     GtkTreeIter it;
     GSList * l;
@@ -81,6 +81,7 @@ static void add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
     GSList *list;
 #endif
     GIcon* gicon;
+    gboolean has_items = FALSE;
     /* Iterate over all menu items in this directory. */
 #if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     for (l = list = menu_cache_dir_list_children(dir); l != NULL; l = l->next)
@@ -97,6 +98,7 @@ static void add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
                 break;
             case MENU_CACHE_TYPE_APP:
                 if (!menu_cache_app_get_is_visible (MENU_CACHE_APP(item), SHOW_IN_LXDE)) break;
+                has_items = TRUE;
             case MENU_CACHE_TYPE_DIR:
                 if(menu_cache_item_get_icon(item))
                     gicon = G_ICON(fm_icon_from_name(menu_cache_item_get_icon(item)));
@@ -111,13 +113,14 @@ static void add_menu_items(GtkTreeIter* parent_it, MenuCacheDir* dir)
                     g_object_unref(gicon);
 
                 if(menu_cache_item_get_type(item) == MENU_CACHE_TYPE_DIR)
-                    add_menu_items(&it, MENU_CACHE_DIR(item));
+                    if (!add_menu_items(&it, MENU_CACHE_DIR(item))) gtk_tree_store_remove (store, &it);
                 break;
         }
     }
 #if MENU_CACHE_CHECK_VERSION(0, 4, 0)
     g_slist_free_full(list, (GDestroyNotify)menu_cache_item_unref);
 #endif
+    return has_items;
 }
 
 #if MENU_CACHE_CHECK_VERSION(0, 4, 0)
