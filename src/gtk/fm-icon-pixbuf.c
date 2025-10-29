@@ -31,6 +31,8 @@
 #include "fm-icon-pixbuf.h"
 #include "fm.h"
 
+extern int scale;
+
 static guint changed_handler = 0;
 
 typedef struct _PixEntry
@@ -107,7 +109,7 @@ GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, const char 
     }
 
     /* not found! load the icon from disk */
-    ii = gtk_icon_theme_lookup_by_gicon(gtk_icon_theme_get_default(), G_ICON(icon), size, GTK_ICON_LOOKUP_FORCE_SIZE);
+    ii = gtk_icon_theme_lookup_by_gicon_for_scale(gtk_icon_theme_get_default(), G_ICON(icon), size, scale, GTK_ICON_LOOKUP_FORCE_SIZE);
     if(ii)
     {
         pix = gtk_icon_info_load_icon(ii, NULL);
@@ -123,11 +125,11 @@ GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, const char 
         char* str = g_icon_to_string(G_ICON(icon));
         g_debug("unable to load icon %s", str);
         if(fallback)
-            pix = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), fallback,
-                    size, GTK_ICON_LOOKUP_USE_BUILTIN|GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+            pix = gtk_icon_theme_load_icon_for_scale(gtk_icon_theme_get_default(), fallback,
+                    size, scale, GTK_ICON_LOOKUP_USE_BUILTIN|GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
         if(pix == NULL) /* still unloadable */
-            pix = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), "unknown",
-                    size, GTK_ICON_LOOKUP_USE_BUILTIN|GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+            pix = gtk_icon_theme_load_icon_for_scale(gtk_icon_theme_get_default(), "unknown",
+                    size, scale, GTK_ICON_LOOKUP_USE_BUILTIN|GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
         if(G_LIKELY(pix))
             g_object_ref(pix);
         g_free(str);

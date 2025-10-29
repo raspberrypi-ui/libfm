@@ -41,6 +41,8 @@
 
 #include "fm-cell-renderer-pixbuf.h"
 
+int scale = 3;
+
 static void fm_cell_renderer_pixbuf_dispose  (GObject *object);
 
 static void fm_cell_renderer_pixbuf_get_size   (GtkCellRenderer            *cell,
@@ -291,6 +293,8 @@ static void fm_cell_renderer_pixbuf_get_size   (GtkCellRenderer            *cell
     else
     {
         GTK_CELL_RENDERER_CLASS(fm_cell_renderer_pixbuf_parent_class)->get_size(cell, widget, rectangle, x_offset, y_offset, width, height);
+		*width /= scale;
+		*height /= scale;
     }
 }
 
@@ -318,6 +322,10 @@ static void fm_cell_renderer_pixbuf_render     (GtkCellRenderer            *cell
         g_object_get(render, "info", &info, NULL); // FIXME: is info certainly FmFileInfo?
         gtk_cell_renderer_set_sensitive(cell, !(info && fm_file_info_is_hidden(info)));
     }
+    GValue val = G_VALUE_INIT;
+    g_value_init (&val, G_TYPE_INT);
+    g_value_set_int (&val, scale);
+    g_object_set_property (G_OBJECT (cell), "scale", &val);
 #if GTK_CHECK_VERSION(3, 0, 0)
     GTK_CELL_RENDERER_CLASS(fm_cell_renderer_pixbuf_parent_class)->render(cell, cr, widget, background_area, cell_area, flags);
 #else
@@ -338,8 +346,8 @@ static void fm_cell_renderer_pixbuf_render     (GtkCellRenderer            *cell
 #if !GTK_CHECK_VERSION(3, 0, 0)
             cairo_t *cr = gdk_cairo_create(window);
 #endif
-            int x = cell_area->x + (cell_area->width - gdk_pixbuf_get_width(pix))/2;
-            int y = cell_area->y + (cell_area->height - gdk_pixbuf_get_height(pix))/2;
+            int x = cell_area->x + (cell_area->width - gdk_pixbuf_get_width(pix) / scale)/2;
+            int y = cell_area->y + (cell_area->height - gdk_pixbuf_get_height(pix) / scale)/2;
 
             if (cell_area->width >= 20 && render->fixed_w >= 20)
                 gdk_cairo_set_source_pixbuf(cr, link_icon, x, y);
