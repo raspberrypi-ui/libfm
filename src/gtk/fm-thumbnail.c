@@ -40,6 +40,8 @@
 /* FIXME: this function prototype seems to be missing in header files of GdkPixbuf. Bug report to them. */
 gboolean gdk_pixbuf_set_option(GdkPixbuf *pixbuf, const gchar *key, const gchar *value);
 
+
+extern int scale;
 /**
  * fm_thumbnail_request
  * @src_file: an image file
@@ -62,7 +64,7 @@ FmThumbnailRequest* fm_thumbnail_request(FmFileInfo* src_file,
                                          FmThumbnailReadyCallback callback,
                                          gpointer user_data)
 {
-    return fm_thumbnail_loader_load(src_file, size, callback, user_data);
+    return fm_thumbnail_loader_load(src_file, size * scale, callback, user_data);
 }
 
 /**

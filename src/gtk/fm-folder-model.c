@@ -50,8 +50,6 @@
 #include <string.h>
 #include <gio/gio.h>
 
-extern int scale;
-
 struct _FmFolderModel
 {
     GObject parent;
@@ -1635,7 +1633,7 @@ static void on_thumbnail_loaded(FmThumbnailRequest* req, gpointer user_data)
  */
 void fm_folder_model_set_icon_size(FmFolderModel* model, guint icon_size)
 {
-    model->icon_size = icon_size * scale;
+    model->icon_size = icon_size;
     reload_icons(model, RELOAD_BOTH);
 }
 
@@ -1651,7 +1649,7 @@ void fm_folder_model_set_icon_size(FmFolderModel* model, guint icon_size)
  */
 guint fm_folder_model_get_icon_size(FmFolderModel* model)
 {
-    return model->icon_size / scale;
+    return model->icon_size;
 }
 
 void fm_folder_model_show_thumbnails(FmFolderModel* model, gboolean show)
