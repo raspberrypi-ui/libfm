@@ -53,6 +53,7 @@ struct _FmCellRendererPixbuf
     gint FM_SEAL(fixed_h);
     gint _reserved1;
     gint _reserved2;
+    guint scale;
 };
 
 struct _FmCellRendererPixbufClass
@@ -66,6 +67,7 @@ GType		fm_cell_renderer_pixbuf_get_type		(void);
 FmCellRendererPixbuf* fm_cell_renderer_pixbuf_new		(void);
 
 void fm_cell_renderer_pixbuf_set_fixed_size(FmCellRendererPixbuf* render, gint w, gint h);
+void fm_cell_renderer_pixbuf_set_scale (FmCellRendererPixbuf *rend, guint scale);
 
 G_END_DECLS
 

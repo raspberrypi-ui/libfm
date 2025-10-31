@@ -562,6 +562,7 @@ static void fm_dir_tree_view_init(FmDirTreeView *view)
 
     col = gtk_tree_view_column_new();
     render = (GtkCellRenderer*)fm_cell_renderer_pixbuf_new();
+    fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *)render, gtk_widget_get_scale_factor (GTK_WIDGET (view)));
     gtk_tree_view_column_pack_start(col, render, FALSE);
     gtk_tree_view_column_set_attributes(col, render,
                                         "pixbuf", FM_DIR_TREE_MODEL_COL_ICON,

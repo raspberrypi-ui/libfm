@@ -599,6 +599,7 @@ static inline void create_icon_view(FmStandardView* fv, GList* sels)
     if(fv->renderer_pixbuf)
         g_object_unref(fv->renderer_pixbuf);
     fv->renderer_pixbuf = g_object_ref_sink(fm_cell_renderer_pixbuf_new());
+    fm_cell_renderer_pixbuf_set_scale (fv->renderer_pixbuf, gtk_widget_get_scale_factor (GTK_WIDGET (fv)));
     render = (GtkCellRenderer*)fv->renderer_pixbuf;
 
     g_object_set((GObject*)render, "follow-state", TRUE, NULL );
@@ -1106,6 +1107,7 @@ static inline void create_list_view(FmStandardView* fv, GList* sels)
     if(fv->renderer_pixbuf)
         g_object_unref(fv->renderer_pixbuf);
     fv->renderer_pixbuf = g_object_ref_sink(fm_cell_renderer_pixbuf_new());
+    fm_cell_renderer_pixbuf_set_scale (fv->renderer_pixbuf, gtk_widget_get_scale_factor (GTK_WIDGET (fv)));
     fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::small_icon_size", G_CALLBACK(on_small_icon_size_changed), fv);
     icon_size = fm_config->small_icon_size;
     fm_cell_renderer_pixbuf_set_fixed_size(fv->renderer_pixbuf, icon_size, icon_size);
