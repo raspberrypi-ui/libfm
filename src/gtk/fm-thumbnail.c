@@ -134,26 +134,26 @@ guint fm_thumbnail_request_get_size(FmThumbnailRequest* req)
 }
 
 static GObject* read_image_from_file(const char* filename) {
+    int w = 1 , h = 1;
+    gdk_pixbuf_get_file_info(filename, &w, &h);
+    /* g_debug("thumbnail generator: image size %dx%d", w, h); */
+
     if (fm_config->thumbnail_max > 0)
     {
-        int w = 1 , h = 1;
-
         /* SF bug #895: image of big dimension can be still small due to
            image compression and loading that image into memory can easily
            overrun the available memory, so let limit image by Mpix as well */
-        gdk_pixbuf_get_file_info(filename, &w, &h);
-        /* g_debug("thumbnail generator: image size %dx%d", w, h); */
         if (w * h > (fm_config->thumbnail_max << 10))
             return NULL;
     }
-    if (scale == 1)
-    return (GObject*)gdk_pixbuf_new_from_file(filename, NULL);
 
-	GdkPixbuf *pix = gdk_pixbuf_new_from_file (filename, NULL);
-	GdkPixbuf *spix = gdk_pixbuf_scale_simple (pix, gdk_pixbuf_get_width (pix) * scale,
-		gdk_pixbuf_get_height (pix) * scale, GDK_INTERP_NEAREST);
-	g_object_unref (pix);
-	return (GObject*) spix;
+    GdkPixbuf *pix = gdk_pixbuf_new_from_file (filename, NULL);
+    if (!pix || scale == 1 || (w > h ? w : h) >= fm_config->big_icon_size * scale)
+        return (GObject*) pix;
+
+    GdkPixbuf *spix = gdk_pixbuf_scale_simple (pix, w * scale, h * scale, GDK_INTERP_NEAREST);
+    g_object_unref (pix);
+    return (GObject*) spix;
 }
 
 static GObject* read_image_from_stream(GInputStream* stream, guint64 len, GCancellable* cancellable)
@@ -219,7 +219,7 @@ static char* get_image_text(GObject* image, const char* key)
 
 static GObject* rotate_image(GObject* image, int degree)
 {
-	return (GObject*)gdk_pixbuf_rotate_simple(GDK_PIXBUF(image), (GdkPixbufRotation)degree);
+    return (GObject*)gdk_pixbuf_rotate_simple(GDK_PIXBUF(image), (GdkPixbufRotation)degree);
 }
 
 static FmThumbnailLoaderBackend gtk_backend = {
