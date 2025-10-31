@@ -146,7 +146,14 @@ static GObject* read_image_from_file(const char* filename) {
         if (w * h > (fm_config->thumbnail_max << 10))
             return NULL;
     }
+    if (scale == 1)
     return (GObject*)gdk_pixbuf_new_from_file(filename, NULL);
+
+	GdkPixbuf *pix = gdk_pixbuf_new_from_file (filename, NULL);
+	GdkPixbuf *spix = gdk_pixbuf_scale_simple (pix, gdk_pixbuf_get_width (pix) * scale,
+		gdk_pixbuf_get_height (pix) * scale, GDK_INTERP_NEAREST);
+	g_object_unref (pix);
+	return (GObject*) spix;
 }
 
 static GObject* read_image_from_stream(GInputStream* stream, guint64 len, GCancellable* cancellable)
