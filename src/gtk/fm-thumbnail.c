@@ -41,7 +41,6 @@
 gboolean gdk_pixbuf_set_option(GdkPixbuf *pixbuf, const gchar *key, const gchar *value);
 
 
-extern int scale;
 /**
  * fm_thumbnail_request
  * @src_file: an image file
@@ -61,10 +60,11 @@ extern int scale;
 /* in main loop */
 FmThumbnailRequest* fm_thumbnail_request(FmFileInfo* src_file,
                                          guint size,
+                                         guint scale,
                                          FmThumbnailReadyCallback callback,
                                          gpointer user_data)
 {
-    return fm_thumbnail_loader_load(src_file, size * scale, callback, user_data);
+    return fm_thumbnail_loader_load(src_file, size, scale, callback, user_data);
 }
 
 /**
@@ -133,7 +133,7 @@ guint fm_thumbnail_request_get_size(FmThumbnailRequest* req)
     return fm_thumbnail_loader_get_size(req);
 }
 
-static GObject* read_image_from_file(const char* filename) {
+static GObject* read_image_from_file(const char* filename, guint scale) {
     int w = 1 , h = 1;
     gdk_pixbuf_get_file_info(filename, &w, &h);
     /* g_debug("thumbnail generator: image size %dx%d", w, h); */

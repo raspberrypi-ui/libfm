@@ -83,6 +83,7 @@ struct _ThumbnailTask
     char* normal_path;      /* used internally */
     char* large_path;       /* used internally */
     GList* requests;        /* access should be locked */
+    guint scale;
 };
 /* cancelled above raised when all requests are cancelled and never dropped again */
 
@@ -96,6 +97,7 @@ struct _FmThumbnailLoader
     GObject* pix;
     sig_atomic_t cancelled;
     gshort size;
+    guint scale;
     gboolean done : 1; /* it has pix set so will be pushed into ready queue */
 };
 
@@ -385,7 +387,7 @@ static void load_thumbnails(ThumbnailTask* task)
 
     if(task->flags & LOAD_NORMAL)
     {
-        normal_pix = backend.read_image_from_file(normal_path);
+        normal_pix = backend.read_image_from_file(normal_path, task->scale);
         if(!normal_pix || is_thumbnail_outdated(normal_pix, normal_path, fm_file_info_get_mtime(task->fi)))
         {
             /* normal_pix is freed in is_thumbnail_outdated() if it's out of date. */
@@ -405,7 +407,7 @@ static void load_thumbnails(ThumbnailTask* task)
 
     if(task->flags & LOAD_LARGE)
     {
-        large_pix = backend.read_image_from_file(large_path);
+        large_pix = backend.read_image_from_file(large_path, task->scale);
         if(!large_pix || is_thumbnail_outdated(large_pix, large_path, fm_file_info_get_mtime(task->fi)))
         {
             /* large_pix is freed in is_thumbnail_outdated() if it's out of date. */
@@ -576,6 +578,7 @@ static ThumbnailTask* find_queued_task(GQueue* queue, FmFileInfo* fi)
 /* in main loop */
 FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
                                             guint size,
+                                            guint scale,
                                             FmThumbnailLoaderCallback callback,
                                             gpointer user_data)
 {
@@ -589,7 +592,8 @@ FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
     g_assert(callback != NULL);
     req = g_slice_new(FmThumbnailLoader);
     req->fi = fm_file_info_ref(src_file);
-    req->size = size;
+    req->size = size * scale;
+    req->scale = scale;
     req->callback = callback;
     req->user_data = user_data;
     req->pix = NULL;
@@ -602,7 +606,7 @@ FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
     g_mutex_lock(lock_ptr);
 
     /* find in the cache first to see if thumbnail is already cached */
-    pix = find_thumbnail_in_hash(src_path, size);
+    pix = find_thumbnail_in_hash(src_path, size * scale);
     if(pix)
     {
         DEBUG("cache found!");
@@ -622,6 +626,7 @@ FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
     {
         task = g_slice_new0(ThumbnailTask);
         task->fi = fm_file_info_ref(src_file);
+        task->scale = req->scale;
         g_queue_push_tail(&loader_queue, task);
     }
     else
@@ -630,7 +635,7 @@ FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
     }
     req->task = task;
 
-    if(size > 128)
+    if(size * scale > 128)
         task->flags |= LOAD_LARGE;
     else
         task->flags |= LOAD_NORMAL;
@@ -977,7 +982,7 @@ static gboolean generate_thumbnails_with_builtin(ThumbnailTask* task)
 #endif
         file_name = g_file_get_path(gf);
         if (file_name)
-            ori_pix = backend.read_image_from_file(file_name);
+            ori_pix = backend.read_image_from_file(file_name, task->scale);
         g_free(file_name);
 #ifdef USE_EXIF
     }
@@ -1156,7 +1161,7 @@ static void generate_thumbnails_with_thumbnailers(ThumbnailTask* task)
                 if(run_thumbnailer(thumbnailer, task, task->normal_path, 128))
                 {
                     generated |= GENERATE_NORMAL;
-                    normal_pix = backend.read_image_from_file(task->normal_path);
+                    normal_pix = backend.read_image_from_file(task->normal_path, task->scale);
                     if (normal_pix)
                     {
                         char *thumb_mtime = backend.get_image_text(normal_pix, "tEXt::Thumb::MTime");
@@ -1176,7 +1181,7 @@ static void generate_thumbnails_with_thumbnailers(ThumbnailTask* task)
                 if (run_thumbnailer(thumbnailer, task, task->large_path, 512))
                 {
                     generated |= GENERATE_LARGE;
-                    large_pix = backend.read_image_from_file(task->large_path);
+                    large_pix = backend.read_image_from_file(task->large_path, task->scale);
                     if (large_pix)
                     {
                         char *thumb_mtime = backend.get_image_text(large_pix, "tEXt::Thumb::MTime");

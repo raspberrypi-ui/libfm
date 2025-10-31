@@ -56,6 +56,7 @@ void _fm_thumbnail_loader_finalize();
 
 FmThumbnailLoader* fm_thumbnail_loader_load(FmFileInfo* src_file,
                                             guint size,
+                                            guint scale,
                                             FmThumbnailLoaderCallback callback,
                                             gpointer user_data);
 
@@ -86,7 +87,7 @@ typedef struct _FmThumbnailLoaderBackend FmThumbnailLoaderBackend;
  * Abstract backend callbacks list.
  */
 struct _FmThumbnailLoaderBackend {
-    GObject* (*read_image_from_file)(const char* filename);
+    GObject* (*read_image_from_file)(const char* filename, guint scale);
     GObject* (*read_image_from_stream)(GInputStream* stream, guint64 len, GCancellable* cancellable);
     gboolean (*write_image)(GObject* image, const char* filename);
     GObject* (*scale_image)(GObject* ori_pix, int new_width, int new_height);

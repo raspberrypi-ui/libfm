@@ -74,6 +74,7 @@ struct _FmFolderModel
     GHashTable* items_hash;
 
     GSList* filters;
+    GtkWidget *view;
 };
 
 typedef struct _FmFolderItem FmFolderItem;
@@ -407,6 +408,11 @@ FmFolderModel *fm_folder_model_new(FmFolder* dir, gboolean show_hidden)
     return model;
 }
 
+void fm_folder_model_set_view (FmFolderModel *fm, GtkWidget *view)
+{
+	fm->view = view;
+}
+
 static inline FmFolderItem* fm_folder_item_new(FmFileInfo* inf)
 {
     FmFolderItem* item = g_slice_new0(FmFolderItem);
@@ -695,6 +701,7 @@ static void fm_folder_model_get_value(GtkTreeModel *tree_model,
 {
     GSequenceIter* item_it;
     FmFolderModel* model = FM_FOLDER_MODEL(tree_model);
+    int scale = gtk_widget_get_scale_factor (model->view);
 
     g_return_if_fail(iter != NULL);
     g_return_if_fail((guint)column < column_infos_n && column_infos[column] != NULL);
@@ -752,7 +759,7 @@ static void fm_folder_model_get_value(GtkTreeModel *tree_model,
             {
                 if(fm_file_info_can_thumbnail(item->inf))
                 {
-                    FmThumbnailRequest* req = fm_thumbnail_request(item->inf, model->icon_size, on_thumbnail_loaded, model);
+                    FmThumbnailRequest* req = fm_thumbnail_request(item->inf, model->icon_size, gtk_widget_get_scale_factor (model->view), on_thumbnail_loaded, model);
                     model->thumbnail_requests = g_list_prepend(model->thumbnail_requests, req);
                     item->thumbnail_loading = TRUE;
                 }
@@ -1738,7 +1745,7 @@ static void on_thumbnail_local_changed(FmConfig* cfg, gpointer user_data)
             /* add all non-local files to thumbnail requests */
             if(!fm_path_is_native_or_trash(path))
             {
-                req = fm_thumbnail_request(fi, model->icon_size, on_thumbnail_loaded, model);
+                req = fm_thumbnail_request(fi, model->icon_size, gtk_widget_get_scale_factor (model->view), on_thumbnail_loaded, model);
                 new_reqs = g_list_append(new_reqs, req);
             }
         }
@@ -1784,7 +1791,7 @@ static void on_thumbnail_max_changed(FmConfig* cfg, gpointer user_data)
                     if(!item->thumbnail_failed && fm_file_info_can_thumbnail(fi)
                        && fm_file_info_is_image(fi))
                     {
-                        req = fm_thumbnail_request(fi, model->icon_size, on_thumbnail_loaded, model);
+                        req = fm_thumbnail_request(fi, model->icon_size, gtk_widget_get_scale_factor (model->view), on_thumbnail_loaded, model);
                         new_reqs = g_list_append(new_reqs, req);
                     }
                 }
@@ -1798,7 +1805,7 @@ static void on_thumbnail_max_changed(FmConfig* cfg, gpointer user_data)
                 GList* l = find_in_pending_thumbnail_requests(model, fi);
                 if(!l)
                 {
-                    req = fm_thumbnail_request(fi, model->icon_size, on_thumbnail_loaded, model);
+                    req = fm_thumbnail_request(fi, model->icon_size, gtk_widget_get_scale_factor (model->view), on_thumbnail_loaded, model);
                     new_reqs = g_list_append(new_reqs, req);
                 }
             }

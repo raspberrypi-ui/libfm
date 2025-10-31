@@ -230,6 +230,8 @@ struct _FmFolderModelColumnInit
 
 FmFolderModelCol fm_folder_model_add_custom_column(const char* name, FmFolderModelColumnInit* init);
 
+void fm_folder_model_set_view (FmFolderModel *fm, GtkWidget *view);
+
 /* modules */
 #define FM_MODULE_gtk_folder_col_VERSION 1
 extern FmFolderModelColumnInit fm_module_init_gtk_folder_col;

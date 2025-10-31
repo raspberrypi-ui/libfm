@@ -51,6 +51,7 @@ void _fm_thumbnail_finalize();
 
 FmThumbnailRequest* fm_thumbnail_request(FmFileInfo* src_file,
                                     guint size,
+                                    guint scale,
                                     FmThumbnailReadyCallback callback,
                                     gpointer user_data);
 
