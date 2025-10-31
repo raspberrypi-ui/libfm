@@ -529,6 +529,8 @@ static void fm_places_view_init(FmPlacesView *self)
     if(G_UNLIKELY(!model))
     {
         model = fm_places_model_new();
+        fm_places_model_set_view (model, GTK_WIDGET(&self->parent));
+        fm_places_model_do_init (model);
         g_object_add_weak_pointer(G_OBJECT(model), (gpointer*)&model);
     }
     else

@@ -31,8 +31,6 @@
 #include "fm-icon-pixbuf.h"
 #include "fm.h"
 
-extern int scale;
-
 static guint changed_handler = 0;
 
 typedef struct _PixEntry
@@ -68,9 +66,9 @@ static void destroy_pixbufs(gpointer data)
  *
  * Since: 0.1.0
  */
-GdkPixbuf* fm_pixbuf_from_icon(FmIcon* icon, int size)
+GdkPixbuf* fm_pixbuf_from_icon(FmIcon* icon, int size, int scale)
 {
-    return fm_pixbuf_from_icon_with_fallback(icon, size, NULL);
+    return fm_pixbuf_from_icon_with_fallback(icon, size, scale, NULL);
 }
 
 /**
@@ -86,7 +84,7 @@ GdkPixbuf* fm_pixbuf_from_icon(FmIcon* icon, int size)
  *
  * Since: 1.2.0
  */
-GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, const char *fallback)
+GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, int scale, const char *fallback)
 {
     GtkIconInfo* ii;
     GdkPixbuf* pix = NULL;

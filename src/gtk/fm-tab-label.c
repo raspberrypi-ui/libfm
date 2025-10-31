@@ -206,7 +206,7 @@ void fm_tab_label_set_icon(FmTabLabel *label, FmIcon *icon)
 
         if (!gtk_icon_size_lookup(GTK_ICON_SIZE_BUTTON, &width, &height))
             height = 20; /* fallback size, is that ever needed? */
-        pixbuf = fm_pixbuf_from_icon(icon, height);
+        pixbuf = fm_pixbuf_from_icon(icon, height, gtk_widget_get_scale_factor (GTK_WIDGET(label->label)));
         if (pixbuf == NULL)
             goto _no_image;
         if (label->image)

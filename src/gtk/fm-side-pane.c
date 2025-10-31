@@ -400,6 +400,7 @@ static void init_dir_tree(FmSidePane* sp)
         GDK_THREADS_ENTER();
 
         FmDirTreeModel* dir_tree_model = fm_dir_tree_model_new();
+        fm_dir_tree_model_set_view (dir_tree_model, GTK_WIDGET(&sp->parent));
         for(l = fm_file_info_list_peek_head_link(job->file_infos); l; l = l->next)
         {
             FmFileInfo* fi = FM_FILE_INFO(l->data);

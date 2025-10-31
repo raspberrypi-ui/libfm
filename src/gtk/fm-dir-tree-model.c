@@ -419,7 +419,7 @@ static void fm_dir_tree_model_get_value ( GtkTreeModel *tree_model,
         {
             if(!item->icon)
                 /* FIXME: use "emblem-symbolic-link" if file is some kind of link */
-                item->icon = fm_pixbuf_from_icon(icon, model->icon_size);
+                item->icon = fm_pixbuf_from_icon(icon, model->icon_size, gtk_widget_get_scale_factor (model->view));
             g_value_set_object(value, item->icon);
         }
         else
@@ -617,6 +617,11 @@ static void fm_dir_tree_model_tree_model_init(GtkTreeModelIface *iface)
 FmDirTreeModel *fm_dir_tree_model_new(void)
 {
     return (FmDirTreeModel*)g_object_new(FM_TYPE_DIR_TREE_MODEL, NULL);
+}
+
+void fm_dir_tree_model_set_view (FmDirTreeModel *model, GtkWidget *view)
+{
+	model->view = view;
 }
 
 static void add_place_holder_child_item(FmDirTreeModel* model, GList* parent_l, GtkTreePath* parent_tp, gboolean emit_signal)
@@ -1185,7 +1190,7 @@ GdkPixbuf* fm_dir_tree_row_get_icon(FmDirTreeModel* model, GtkTreeIter* iter)
         return item->icon;
     if(item->fi && (icon = fm_file_info_get_icon(item->fi)))
         /* FIXME: use "emblem-symbolic-link" if file is some kind of link */
-        item->icon = fm_pixbuf_from_icon(icon, model->icon_size);
+        item->icon = fm_pixbuf_from_icon(icon, model->icon_size, gtk_widget_get_scale_factor (model->view));
     return item->icon;
 }
 

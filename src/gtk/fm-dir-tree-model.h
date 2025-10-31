@@ -76,6 +76,7 @@ struct _FmDirTreeModel
     gboolean FM_SEAL(show_hidden);
     gpointer _reserved1;
     gpointer _reserved2;
+    GtkWidget *view;
 };
 
 /**
@@ -111,6 +112,8 @@ const char* fm_dir_tree_row_get_disp_name(FmDirTreeModel* model, GtkTreeIter* it
 
 void fm_dir_tree_model_set_show_hidden(FmDirTreeModel* model, gboolean show_hidden);
 gboolean fm_dir_tree_model_get_show_hidden(FmDirTreeModel* model);
+
+void fm_dir_tree_model_set_view (FmDirTreeModel *model, GtkWidget *view);
 
 /* void fm_dir_tree_model_reload(FmDirTreeModel* model); */
 
