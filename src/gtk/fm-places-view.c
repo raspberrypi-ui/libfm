@@ -68,8 +68,6 @@ enum
     N_SIGNALS
 };
 
-extern int scale;
-
 // for gestures
 static GtkTreePath *gpath = NULL;
 static gboolean longpress = FALSE;
@@ -561,7 +559,7 @@ static void fm_places_view_init(FmPlacesView *self)
     renderer = gtk_cell_renderer_pixbuf_new();
     GValue val = G_VALUE_INIT;
     g_value_init (&val, G_TYPE_INT);
-    g_value_set_int (&val, scale);
+    g_value_set_int (&val, gtk_widget_get_scale_factor (GTK_WIDGET (self)));
     g_object_set_property (G_OBJECT (renderer), "scale", &val);
     self->mount_indicator_renderer = GTK_CELL_RENDERER_PIXBUF(renderer);
     gtk_tree_view_column_pack_start( col, renderer, FALSE );
