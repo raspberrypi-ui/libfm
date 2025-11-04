@@ -340,7 +340,7 @@ static FmPlacesItem* new_path_item(GtkListStore* model, GtkTreeIter* it,
     } while(gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &next_it));
     gtk_list_store_append(model, it);
 _added:
-    pix = fm_pixbuf_from_icon(item->icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (FM_PLACES_MODEL(model)->view)); //!!!! the problem is here
+    pix = fm_pixbuf_from_icon(item->icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (FM_PLACES_MODEL(model)->view));
     gtk_list_store_set(model, it,
                        FM_PLACES_MODEL_COL_INFO, item,
                        FM_PLACES_MODEL_COL_LABEL, label,
@@ -593,7 +593,7 @@ static void add_bookmarks(FmPlacesModel* model, FmFileInfoJob* job)
     GList *bms, *l;
     FmIcon* icon = fm_icon_from_name("folder");
     FmIcon* remote_icon = NULL;
-    GdkPixbuf* folder_pix = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (model->view)); //!!!!
+    GdkPixbuf* folder_pix = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (model->view));
     GdkPixbuf* remote_pix = NULL;
     bms = fm_bookmarks_get_all(model->bookmarks);
     for(l=bms;l;l=l->next)
@@ -1160,7 +1160,7 @@ void fm_places_model_do_init (FmPlacesModel *self)
     self->pane_icon_size_change_handler = g_signal_connect(fm_config, "changed::pane_icon_size",
                                              G_CALLBACK(on_pane_icon_size_changed), self);
     icon = fm_icon_from_name("media-eject");
-    self->eject_icon = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (self->view)); //!!!!
+    self->eject_icon = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size, gtk_widget_get_scale_factor (self->view));
     g_object_unref(icon);
 
     if(fm_config->places_home)
