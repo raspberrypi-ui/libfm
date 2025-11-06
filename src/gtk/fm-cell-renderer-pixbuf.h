@@ -68,6 +68,7 @@ FmCellRendererPixbuf* fm_cell_renderer_pixbuf_new		(void);
 
 void fm_cell_renderer_pixbuf_set_fixed_size(FmCellRendererPixbuf* render, gint w, gint h);
 void fm_cell_renderer_pixbuf_set_scale (FmCellRendererPixbuf *rend, guint scale);
+guint fm_cell_renderer_pixbuf_get_scale (FmCellRendererPixbuf *rend);
 
 G_END_DECLS
 

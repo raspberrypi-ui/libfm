@@ -36,6 +36,7 @@ static guint changed_handler = 0;
 typedef struct _PixEntry
 {
     int size;
+    int scale;
     GdkPixbuf* pix;
 }PixEntry;
 
@@ -98,7 +99,7 @@ GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, int scale, 
     for( l = pixs; l; l=l->next )
     {
         ent = (PixEntry*)l->data;
-        if(ent->size == size) /* cached pixbuf is found! */
+        if(ent->size == size && ent->scale == scale) /* cached pixbuf is found! */
         {
             /* return stealed data back */
             g_object_set_qdata_full(G_OBJECT(icon), fm_qdata_id, pixs, destroy_pixbufs);
@@ -136,6 +137,7 @@ GdkPixbuf* fm_pixbuf_from_icon_with_fallback(FmIcon* icon, int size, int scale, 
     /* cache this! */
     ent = g_slice_new(PixEntry);
     ent->size = size;
+    ent->scale = scale;
     ent->pix = pix;
 
     /* FIXME: maybe we should unload icons that nobody is using to reduce memory usage. */

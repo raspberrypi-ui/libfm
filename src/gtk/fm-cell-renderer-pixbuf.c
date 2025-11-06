@@ -220,6 +220,11 @@ void fm_cell_renderer_pixbuf_set_scale (FmCellRendererPixbuf *rend, guint scale)
 	rend->scale = scale;
 }
 
+guint fm_cell_renderer_pixbuf_get_scale (FmCellRendererPixbuf *rend)
+{
+	return rend->scale;
+}
+
 static void fm_cell_renderer_pixbuf_get_property ( GObject *object,
                                       guint param_id,
                                       GValue *value,
