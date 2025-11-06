@@ -214,6 +214,18 @@ static void on_tree_view_row_activated(GtkTreeView* tv, GtkTreePath* path, GtkTr
     fm_folder_view_item_clicked(FM_FOLDER_VIEW(fv), path, FM_FV_ACTIVATED, 0, -1, -1);
 }
 
+static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
+{
+    FmStandardView *fv = (FmStandardView *) self;
+    int scale = gtk_widget_get_scale_factor (self);
+    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) fv->renderer_pixbuf) != scale)
+    {
+        fm_folder_model_set_icon_size (fv->model, fm_folder_model_get_icon_size (fv->model));
+        fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) fv->renderer_pixbuf, scale);
+    }
+    return FALSE;
+}
+
 static void fm_standard_view_init(FmStandardView *self)
 {
     gtk_scrolled_window_set_hadjustment((GtkScrolledWindow*)self, NULL);
@@ -234,6 +246,8 @@ static void fm_standard_view_init(FmStandardView *self)
 
     self->mode = -1;
     self->updated_col = -1;
+
+    g_signal_connect (self, "draw", G_CALLBACK (on_draw), NULL);
 }
 
 /**

@@ -521,11 +521,12 @@ static void on_pv_gesture_end (GtkGestureLongPress *, GdkEventSequence *, FmPlac
 
 static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
 {
+    FmPlacesView *pv = (FmPlacesView *) self;
     int scale = gtk_widget_get_scale_factor (self);
-    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) ((FmPlacesView *) self)->icon_renderer) != scale)
+    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) pv->icon_renderer) != scale)
     {
         fm_places_model_update_icons (model);
-        fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) ((FmPlacesView *) self)->icon_renderer, scale);
+        fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) pv->icon_renderer, scale);
     }
     return FALSE;
 }
