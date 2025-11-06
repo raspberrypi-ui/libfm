@@ -124,6 +124,8 @@ void fm_places_model_reload (FmPlacesModel *model);
 void fm_places_model_set_view (FmPlacesModel *pm, GtkWidget *view);
 void fm_places_model_do_init (FmPlacesModel *self);
 
+void fm_places_model_update_icons (FmPlacesModel* model);
+
 G_END_DECLS
 
 #endif /* __FM_PLACES_MODEL_H__ */

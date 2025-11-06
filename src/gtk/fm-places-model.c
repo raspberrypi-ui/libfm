@@ -740,6 +740,11 @@ static void update_icons(FmPlacesModel* model)
     }while( gtk_tree_model_iter_next(GTK_TREE_MODEL(model), &it) );
 }
 
+void fm_places_model_update_icons (FmPlacesModel* model)
+{
+    update_icons (model);
+}
+
 static void on_use_trash_changed(FmConfig* cfg, gpointer user_data)
 {
     FmPlacesModel* model = FM_PLACES_MODEL(user_data);
