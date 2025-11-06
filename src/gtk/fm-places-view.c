@@ -527,6 +527,10 @@ static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
     {
         fm_places_model_update_icons (model);
         fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) pv->icon_renderer, scale);
+        GValue val = G_VALUE_INIT;
+        g_value_init (&val, G_TYPE_INT);
+        g_value_set_int (&val, scale);
+        g_object_set_property (G_OBJECT (pv->mount_indicator_renderer), "scale", &val);
     }
     return FALSE;
 }
