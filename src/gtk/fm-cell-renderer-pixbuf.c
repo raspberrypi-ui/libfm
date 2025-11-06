@@ -217,12 +217,12 @@ FmCellRendererPixbuf *fm_cell_renderer_pixbuf_new(void)
 
 void fm_cell_renderer_pixbuf_set_scale (FmCellRendererPixbuf *rend, guint scale)
 {
-	rend->scale = scale;
+    rend->scale = scale;
 }
 
 guint fm_cell_renderer_pixbuf_get_scale (FmCellRendererPixbuf *rend)
 {
-	return rend->scale;
+    return rend->scale;
 }
 
 static void fm_cell_renderer_pixbuf_get_property ( GObject *object,
@@ -301,8 +301,8 @@ static void fm_cell_renderer_pixbuf_get_size   (GtkCellRenderer            *cell
     else
     {
         GTK_CELL_RENDERER_CLASS(fm_cell_renderer_pixbuf_parent_class)->get_size(cell, widget, rectangle, x_offset, y_offset, width, height);
-		*width /= render->scale;
-		*height /= render->scale;
+        *width /= render->scale;
+        *height /= render->scale;
     }
 }
 

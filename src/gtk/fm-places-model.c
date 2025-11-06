@@ -1591,7 +1591,7 @@ FmPlacesModel *fm_places_model_new(void)
 
 void fm_places_model_set_view (FmPlacesModel *pm, GtkWidget *view)
 {
-	pm->view = view;
+    pm->view = view;
 }
 
 /**
