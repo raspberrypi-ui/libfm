@@ -54,7 +54,7 @@ struct _FmPlacesView
     GtkCellRendererPixbuf* FM_SEAL(mount_indicator_renderer);
     char* FM_SEAL(home_dir);
     GtkGesture *gesture;
-    gpointer _reserved1;
+    GtkCellRendererPixbuf *icon_renderer;
     gpointer _reserved2;
 };
 

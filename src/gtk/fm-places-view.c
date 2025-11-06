@@ -519,6 +519,17 @@ static void on_pv_gesture_end (GtkGestureLongPress *, GdkEventSequence *, FmPlac
     longpress = FALSE;
 }
 
+static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
+{
+    int scale = gtk_widget_get_scale_factor (self);
+    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) ((FmPlacesView *) self)->icon_renderer) != scale)
+    {
+        fm_places_model_update_icons (model);
+        fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) ((FmPlacesView *) self)->icon_renderer, scale);
+    }
+    return FALSE;
+}
+
 static void fm_places_view_init(FmPlacesView *self)
 {
     GtkTreeViewColumn* col;
@@ -552,6 +563,7 @@ static void fm_places_view_init(FmPlacesView *self)
     handler = g_signal_connect(fm_config, "changed::pane_icon_size", G_CALLBACK(on_renderer_icon_size_changed), renderer);
     g_object_weak_ref(G_OBJECT(renderer), on_cell_renderer_pixbuf_destroy, GUINT_TO_POINTER(handler));
     fm_cell_renderer_pixbuf_set_fixed_size((FmCellRendererPixbuf*)renderer, fm_config->pane_icon_size, fm_config->pane_icon_size);
+    self->icon_renderer = GTK_CELL_RENDERER_PIXBUF(renderer);
 
     gtk_tree_view_column_pack_start( col, renderer, FALSE );
     gtk_tree_view_column_set_attributes( col, renderer,
@@ -592,6 +604,8 @@ static void fm_places_view_init(FmPlacesView *self)
     g_signal_connect (self->gesture, "pressed", G_CALLBACK (on_pv_gesture_pressed), self);
     g_signal_connect (self->gesture, "end", G_CALLBACK (on_pv_gesture_end), self);
     gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (self->gesture), GTK_PHASE_CAPTURE);
+
+    g_signal_connect (self, "draw", G_CALLBACK (on_draw), NULL);
 }
 
 /*----------------------------------------------------------------------
