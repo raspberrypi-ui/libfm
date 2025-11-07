@@ -242,6 +242,11 @@ static void on_theme_changed(GtkIconTheme* theme, FmDirTreeModel* model)
     gtk_tree_path_free(tp);
 }
 
+void fm_dir_tree_model_update_icons (FmDirTreeModel* model)
+{
+    on_theme_changed (NULL, model);
+}
+
 static void on_pane_icon_size_changed(FmConfig* cfg, gpointer user_data)
 {
     FmDirTreeModel* model = FM_DIR_TREE_MODEL(user_data);

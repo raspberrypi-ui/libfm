@@ -54,7 +54,7 @@ struct _FmDirTreeView
     /* <private> */
     FmDndDest* FM_SEAL(dd);
     GtkGesture *gesture;
-    gpointer _reserved1;
+    GtkCellRenderer *icon_renderer;
 
     /* used for chdir */
     GSList* FM_SEAL(paths_to_expand);

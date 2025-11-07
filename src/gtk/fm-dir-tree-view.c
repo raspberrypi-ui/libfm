@@ -550,6 +550,22 @@ static void on_dv_gesture_end (GtkGestureLongPress *, GdkEventSequence *, FmDirT
     longpress = FALSE;
 }
 
+static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
+{
+    FmDirTreeView *dv = (FmDirTreeView *) self;
+    FmDirTreeModel *model= FM_DIR_TREE_MODEL(gtk_tree_view_get_model (GTK_TREE_VIEW (dv)));
+    int scale = gtk_widget_get_scale_factor (self);
+    if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) dv->icon_renderer) != scale)
+    {
+        fm_dir_tree_model_update_icons (model);
+        fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *) dv->icon_renderer, scale);
+        GValue val = G_VALUE_INIT;
+        g_value_init (&val, G_TYPE_INT);
+        g_value_set_int (&val, scale);
+    }
+    return FALSE;
+}
+
 static void fm_dir_tree_view_init(FmDirTreeView *view)
 {
     GtkTreeSelection* tree_sel;
@@ -561,10 +577,10 @@ static void fm_dir_tree_view_init(FmDirTreeView *view)
     /* gtk_tree_view_set_enable_tree_lines(view, TRUE); */
 
     col = gtk_tree_view_column_new();
-    render = (GtkCellRenderer*)fm_cell_renderer_pixbuf_new();
-    fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *)render, gtk_widget_get_scale_factor (GTK_WIDGET (view)));
-    gtk_tree_view_column_pack_start(col, render, FALSE);
-    gtk_tree_view_column_set_attributes(col, render,
+    view->icon_renderer = (GtkCellRenderer*)fm_cell_renderer_pixbuf_new();
+    fm_cell_renderer_pixbuf_set_scale ((FmCellRendererPixbuf *)view->icon_renderer, gtk_widget_get_scale_factor (GTK_WIDGET (view)));
+    gtk_tree_view_column_pack_start(col, view->icon_renderer, FALSE);
+    gtk_tree_view_column_set_attributes(col, view->icon_renderer,
                                         "pixbuf", FM_DIR_TREE_MODEL_COL_ICON,
                                         "info", FM_DIR_TREE_MODEL_COL_INFO, NULL);
 
@@ -588,6 +604,8 @@ static void fm_dir_tree_view_init(FmDirTreeView *view)
     g_signal_connect (view->gesture, "pressed", G_CALLBACK (on_dv_gesture_pressed), view);
     g_signal_connect (view->gesture, "end", G_CALLBACK (on_dv_gesture_end), view);
     gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (view->gesture), GTK_PHASE_CAPTURE);
+
+    g_signal_connect (view, "draw", G_CALLBACK (on_draw), NULL);
 }
 
 /**
