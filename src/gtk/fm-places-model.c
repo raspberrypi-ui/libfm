@@ -72,6 +72,7 @@ struct _FmPlacesItem
         GMount* mount; /* used if type == FM_PLACES_ITEM_MOUNT */
         FmBookmarkItem* bm_item; /* used if type == FM_PLACES_ITEM_PATH */
     };
+    FmPlacesModel *model;
 };
 
 struct _FmPlacesModel
@@ -296,6 +297,7 @@ static inline FmPlacesItem* add_new_item(GtkListStore* model, FmPlacesType type,
 
     item->fi = fm_file_info_new();
     item->type = type;
+    item->model = FM_PLACES_MODEL (model);
     if(at)
     {
         gtk_tree_model_get_iter(GTK_TREE_MODEL(model), &next_it, at);
@@ -321,6 +323,7 @@ static FmPlacesItem* new_path_item(GtkListStore* model, GtkTreeIter* it,
     item->type = FM_PLACES_ITEM_PATH;
     item->id = id;
     item->icon = fm_icon_from_name(icon_name);
+    item->model = FM_PLACES_MODEL (model);
     if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(model), &next_it)) do
     {
         tst = NULL;
@@ -1782,4 +1785,9 @@ FmPath* fm_places_item_get_path(FmPlacesItem* item)
 FmBookmarkItem* fm_places_item_get_bookmark_item(FmPlacesItem* item)
 {
     return item->type == FM_PLACES_ITEM_PATH ? item->bm_item : NULL;
+}
+
+FmPlacesModel *fm_places_item_get_model (FmPlacesItem *item)
+{
+    return item->model;
 }

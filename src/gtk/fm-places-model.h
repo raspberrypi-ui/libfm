@@ -126,6 +126,8 @@ void fm_places_model_do_init (FmPlacesModel *self);
 
 void fm_places_model_update_icons (FmPlacesModel* model);
 
+FmPlacesModel *fm_places_item_get_model (FmPlacesItem *item);
+
 G_END_DECLS
 
 #endif /* __FM_PLACES_MODEL_H__ */

@@ -98,9 +98,6 @@ static gboolean on_dnd_dest_files_dropped(FmDndDest* dd, int x, int y, GdkDragAc
 
 G_DEFINE_TYPE(FmPlacesView, fm_places_view, GTK_TYPE_TREE_VIEW);
 
-/** One common FmPlacesModel for all FmPlacesView instances */
-static FmPlacesModel* model = NULL;
-
 static guint signals[N_SIGNALS];
 
 #define PLACES_MENU_XML \
@@ -201,7 +198,7 @@ static void on_cell_renderer_pixbuf_destroy(gpointer user_data, GObject* render)
 
 void fm_places_reload (void)
 {
-    if (model) fm_places_model_reload (model);
+    //!!!!if (model) fm_places_model_reload (model);
 }
 
 /*----------------------------------------------------------------------
@@ -216,6 +213,7 @@ void fm_places_reload (void)
  * for the bookmark item and modified the tree path @tp passed into this function. */
 static gboolean get_bookmark_drag_dest(FmPlacesView* view, GtkTreePath** tp, GtkTreeViewDropPosition* pos)
 {
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     gboolean ret = TRUE;
     if(*tp)
     {
@@ -254,6 +252,7 @@ static gboolean on_drag_motion (GtkWidget *dest_widget,
                     GdkDragContext *drag_context, gint x, gint y, guint time)
 {
     FmPlacesView* view = FM_PLACES_VIEW(dest_widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     /* fm_drag_context_has_target_name(drag_context, "GTK_TREE_MODEL_ROW"); */
     GdkAtom target;
     GtkTreeViewDropPosition pos;
@@ -345,6 +344,7 @@ static void on_drag_data_received ( GtkWidget *dest_widget,
                 GtkSelectionData *sel_data, guint info, guint time)
 {
     FmPlacesView* view = FM_PLACES_VIEW(dest_widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     GtkTreePath* dest_tp = NULL;
     GtkTreeViewDropPosition pos;
     gboolean ret = FALSE;
@@ -409,6 +409,7 @@ static gboolean on_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
                                           FmDndDestTargetType info_type,
                                           FmPathList* files, FmPlacesView* view)
 {
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     FmPath* dest;
     GList* l;
     gboolean ret = FALSE;
@@ -522,6 +523,7 @@ static void on_pv_gesture_end (GtkGestureLongPress *, GdkEventSequence *, FmPlac
 static gboolean on_draw (GtkWidget *self, cairo_t *cr, gpointer data)
 {
     FmPlacesView *pv = (FmPlacesView *) self;
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (pv)));
     int scale = gtk_widget_get_scale_factor (self);
     if (fm_cell_renderer_pixbuf_get_scale ((FmCellRendererPixbuf *) pv->icon_renderer) != scale)
     {
@@ -542,6 +544,7 @@ static void fm_places_view_init(FmPlacesView *self)
     AtkObject *obj;
     guint handler;
 
+#if 0
     if(G_UNLIKELY(!model))
     {
         model = fm_places_model_new();
@@ -558,6 +561,7 @@ static void fm_places_view_init(FmPlacesView *self)
 
     gtk_tree_view_set_model(GTK_TREE_VIEW(self), GTK_TREE_MODEL(model));
     g_object_unref(model);
+#endif
 
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(self), FALSE);
     gtk_tree_view_set_row_separator_func(GTK_TREE_VIEW(self), sep_func, NULL, NULL);
@@ -632,6 +636,7 @@ FmPlacesView *fm_places_view_new(void)
 
 static void activate_row(FmPlacesView* view, guint button, GtkTreePath* tree_path)
 {
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     GtkTreeIter it;
     if(gtk_tree_model_get_iter(GTK_TREE_MODEL(model), &it, tree_path))
     {
@@ -722,6 +727,7 @@ void fm_places_view_chdir(FmPlacesView* pv, FmPath* path)
 static gboolean on_button_release(GtkWidget* widget, GdkEventButton* evt)
 {
     FmPlacesView* view = FM_PLACES_VIEW(widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     gboolean ret = GTK_WIDGET_CLASS(fm_places_view_parent_class)->button_release_event(widget, evt);
 
     /* we should finish the event before we do our work, otherwise gtk may
@@ -822,6 +828,8 @@ static void place_item_menu_unref(gpointer ui, GObject *menu)
 
 static GtkWidget* place_item_get_menu(FmPlacesItem* item, GtkWidget *widget)
 {
+    FmPlacesView* view = FM_PLACES_VIEW(widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     GtkWidget* menu = NULL;
     GtkUIManager* ui = gtk_ui_manager_new();
     GtkActionGroup* act_grp = gtk_action_group_new("Popup");
@@ -1030,6 +1038,8 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
 
 static void fm_places_item_popup(GtkWidget *widget, GtkTreeIter *it, guint32 time)
 {
+    FmPlacesView* view = FM_PLACES_VIEW(widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     if(!fm_places_model_iter_is_separator(model, it))
     {
         FmPlacesItem* item;
@@ -1052,6 +1062,7 @@ static void fm_places_item_popup(GtkWidget *widget, GtkTreeIter *it, guint32 tim
 static gboolean on_button_press(GtkWidget* widget, GdkEventButton* evt)
 {
     FmPlacesView* view = FM_PLACES_VIEW(widget);
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
     GtkTreePath* tp;
     GtkTreeViewColumn* col;
     GtkTreeIter it;
@@ -1192,6 +1203,7 @@ static void on_format(GtkAction* act, gpointer user_data)
 static void on_remove_bm(GtkAction* act, gpointer user_data)
 {
     FmPlacesItem* item = (FmPlacesItem*)user_data;
+    FmPlacesModel *model = fm_places_item_get_model (item);
     fm_bookmarks_remove(fm_places_model_get_bookmarks(model), fm_places_item_get_bookmark_item(item));
     /* FIXME: remove item from FmPlacesModel or invalidate it right now so
        make duplicate deletions impossible */
@@ -1200,6 +1212,7 @@ static void on_remove_bm(GtkAction* act, gpointer user_data)
 static void on_rename_bm(GtkAction* act, gpointer user_data)
 {
     FmPlacesItem* item = (FmPlacesItem*)user_data;
+    FmPlacesModel *model = fm_places_item_get_model (item);
     char* new_name = fm_get_user_input(_get_gtk_window_from_action(act),
                                        _("Rename Bookmark Item"),
                                        _("Enter a new name:"),
@@ -1217,6 +1230,7 @@ static void on_rename_bm(GtkAction* act, gpointer user_data)
 static void on_move_bm_up(GtkAction* act, gpointer user_data)
 {
     FmPlacesItem* item = (FmPlacesItem*)user_data;
+    FmPlacesModel *model = fm_places_item_get_model (item);
     int new_pos, sep_pos;
     GtkTreeIter src_it, dest_it;
     GtkTreePath *tp, *sep_tp;
@@ -1243,6 +1257,7 @@ _end:
 static void on_move_bm_down(GtkAction* act, gpointer user_data)
 {
     FmPlacesItem* item = (FmPlacesItem*)user_data;
+    FmPlacesModel *model = fm_places_item_get_model (item);
     int new_pos, sep_pos;
     GtkTreeIter src_it, dest_it;
     GtkTreePath *tp, *sep_tp;
