@@ -548,16 +548,10 @@ static void fm_places_view_init(FmPlacesView *self)
     if(G_UNLIKELY(!model))
     {
         model = fm_places_model_new();
-        fm_places_model_set_view (model, GTK_WIDGET(&self->parent));
-        fm_places_model_do_init (model);
         g_object_add_weak_pointer(G_OBJECT(model), (gpointer*)&model);
     }
     else
-    {
         g_object_ref(model);
-        fm_places_model_set_view (model, GTK_WIDGET(&self->parent));
-        fm_places_model_update_icons (model);
-    }
 
     gtk_tree_view_set_model(GTK_TREE_VIEW(self), GTK_TREE_MODEL(model));
     g_object_unref(model);
