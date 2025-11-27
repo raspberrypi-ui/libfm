@@ -464,11 +464,11 @@ static void fm_places_view_dispose(GObject *object)
     g_return_if_fail(FM_IS_PLACES_VIEW(object));
     self = (FmPlacesView*)object;
 
-    FmPlacesModel *mod = (FmPlacesModel *) gtk_tree_view_get_model (GTK_TREE_VIEW(self));
-    if (mod)
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (self)));
+    if (model)
     {
-        fm_places_model_free_separator (mod);
-        fm_places_model_free_trash (mod);
+        fm_places_model_free_separator (model);
+        fm_places_model_free_trash (model);
     }
 
     if(self->dnd_dest)
@@ -829,8 +829,7 @@ static void place_item_menu_unref(gpointer ui, GObject *menu)
 
 static GtkWidget* place_item_get_menu(FmPlacesItem* item, GtkWidget *widget)
 {
-    FmPlacesView* view = FM_PLACES_VIEW(widget);
-    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (FM_PLACES_VIEW (widget))));
     GtkWidget* menu = NULL;
     GtkUIManager* ui = gtk_ui_manager_new();
     GtkActionGroup* act_grp = gtk_action_group_new("Popup");
@@ -1039,8 +1038,7 @@ static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
 
 static void fm_places_item_popup(GtkWidget *widget, GtkTreeIter *it, guint32 time)
 {
-    FmPlacesView* view = FM_PLACES_VIEW(widget);
-    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+    FmPlacesModel *model = FM_PLACES_MODEL (gtk_tree_view_get_model (GTK_TREE_VIEW (FM_PLACES_VIEW (widget))));
     if(!fm_places_model_iter_is_separator(model, it))
     {
         FmPlacesItem* item;
