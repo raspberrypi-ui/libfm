@@ -463,9 +463,11 @@ void fm_side_pane_set_mode(FmSidePane* sp, FmSidePaneMode mode)
 
         FmPlacesModel* places_model = fm_places_model_new();
         fm_places_model_set_view (places_model, GTK_WIDGET(sp->view2));
+        fm_places_model_do_init (places_model);
         fm_places_model_update_icons (places_model);
         gtk_tree_view_set_model(GTK_TREE_VIEW(sp->view2), GTK_TREE_MODEL(places_model));
         g_object_unref(places_model);
+        printf ("count after create %d\n", ((GObject*)places_model)->ref_count);
 
         fm_places_view_chdir (FM_PLACES_VIEW (sp->view2), sp->cwd);
         g_signal_connect (sp->view2, "chdir", G_CALLBACK (on_places_chdir), sp);
@@ -497,6 +499,7 @@ void fm_side_pane_set_mode(FmSidePane* sp, FmSidePaneMode mode)
 
         FmPlacesModel* places_model = fm_places_model_new();
         fm_places_model_set_view (places_model, GTK_WIDGET(sp->view));
+        fm_places_model_do_init (places_model);
         fm_places_model_update_icons (places_model);
         gtk_tree_view_set_model(GTK_TREE_VIEW(sp->view), GTK_TREE_MODEL(places_model));
         g_object_unref(places_model);

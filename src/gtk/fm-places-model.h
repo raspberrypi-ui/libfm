@@ -127,6 +127,10 @@ void fm_places_model_update_icons (FmPlacesModel* model);
 
 FmPlacesModel *fm_places_item_get_model (FmPlacesItem *item);
 
+void fm_places_model_do_init (FmPlacesModel *self);
+void fm_places_model_free_separator (FmPlacesModel *model);
+void fm_places_model_free_trash (FmPlacesModel *model);
+
 G_END_DECLS
 
 #endif /* __FM_PLACES_MODEL_H__ */

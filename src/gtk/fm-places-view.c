@@ -459,10 +459,19 @@ static gboolean on_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
 static void fm_places_view_dispose(GObject *object)
 {
     FmPlacesView* self;
+    printf ("places view dispose\n");
 
     g_return_if_fail(object != NULL);
     g_return_if_fail(FM_IS_PLACES_VIEW(object));
     self = (FmPlacesView*)object;
+
+    FmPlacesModel *mod = (FmPlacesModel *) gtk_tree_view_get_model (GTK_TREE_VIEW(self));
+    if (mod)
+    {
+        fm_places_model_free_separator (mod);
+        fm_places_model_free_trash (mod);
+        printf ("count after frees %d\n", ((GObject*)mod)->ref_count);
+    }
 
     if(self->dnd_dest)
     {

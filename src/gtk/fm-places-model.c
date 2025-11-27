@@ -283,7 +283,9 @@ static void update_volume_or_mount(FmPlacesModel* model, FmPlacesItem* item, Gtk
         }
     }
 
-    pix = fm_pixbuf_from_icon(item->icon, fm_config->pane_icon_size, GTK_IS_WIDGET (model->view) ? gtk_widget_get_scale_factor (model->view) : 1);
+    int scale = 1;
+    if (model && model->view && GTK_IS_WIDGET (model->view)) scale = gtk_widget_get_scale_factor (model->view);
+    pix = fm_pixbuf_from_icon (item->icon, fm_config->pane_icon_size, scale);
     gtk_list_store_set(GTK_LIST_STORE(model), it, FM_PLACES_MODEL_COL_ICON, pix, FM_PLACES_MODEL_COL_LABEL, name, -1);
     g_object_unref(pix);
     g_free(name);
@@ -1125,6 +1127,10 @@ void fm_places_model_reload (FmPlacesModel *self)
 
 static void fm_places_model_init(FmPlacesModel *self)
 {
+}
+
+void fm_places_model_do_init(FmPlacesModel *self)
+{
     GType types[] = {GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_POINTER};
     GtkTreeIter it;
     GList *vols, *l;
@@ -1430,6 +1436,7 @@ static void fm_places_model_dispose(GObject *object)
 {
     FmPlacesModel *self;
     GtkTreeIter it;
+    printf ("places model dispose\n");
 
     g_return_if_fail(object != NULL);
     g_return_if_fail(FM_IS_PLACES_MODEL(object));
@@ -1459,11 +1466,9 @@ static void fm_places_model_dispose(GObject *object)
         }while(gtk_tree_model_iter_next(GTK_TREE_MODEL(self), &it));
     }
 
-    gtk_tree_row_reference_free(self->separator);
-    self->separator = NULL;
+    fm_places_model_free_separator (self);
 
-    gtk_tree_row_reference_free(self->trash);
-    self->trash = NULL;
+    fm_places_model_free_trash (self);
 
     if(self->theme_change_handler)
     {
@@ -1563,6 +1568,24 @@ static void fm_places_model_dispose(GObject *object)
     self->eject_icon = NULL;
 
     G_OBJECT_CLASS(fm_places_model_parent_class)->dispose(object);
+}
+
+void fm_places_model_free_separator (FmPlacesModel *model)
+{
+    if (gtk_tree_row_reference_valid (model->separator))
+    {
+        gtk_tree_row_reference_free(model->separator);
+        model->separator = NULL;
+    }
+}
+
+void fm_places_model_free_trash (FmPlacesModel *model)
+{
+    if (gtk_tree_row_reference_valid (model->trash))
+    {
+        gtk_tree_row_reference_free(model->trash);
+        model->trash = NULL;
+    }
 }
 
 static void fm_places_model_class_init(FmPlacesModelClass *klass)
