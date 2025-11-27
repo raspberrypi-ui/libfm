@@ -571,7 +571,9 @@ void fm_file_info_set_from_g_file_data(FmFileInfo *fi, GFile *gf, GFileInfo *inf
         fi->size = g_file_info_get_size(inf);
     else fi->size = 0;
 
-    tmp = g_file_info_get_content_type(inf);
+    if (g_file_info_has_attribute (inf, G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE))
+        tmp = g_file_info_get_content_type(inf);
+    else tmp = NULL;
     if(tmp)
         fi->mime_type = fm_mime_type_from_name(tmp);
 
@@ -690,7 +692,9 @@ _file_is_symlink:
     }
 
     /* try file-specific icon first */
-    gicon = g_file_info_get_icon(inf);
+    if (g_file_info_has_attribute(inf, G_FILE_ATTRIBUTE_STANDARD_ICON))
+        gicon = g_file_info_get_icon(inf);
+    else gicon = NULL;
     if(gicon)
         fi->icon = fm_icon_from_gicon(gicon);
         /* g_object_unref(gicon); this is not needed since
