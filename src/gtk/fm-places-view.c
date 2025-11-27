@@ -198,7 +198,7 @@ static void on_cell_renderer_pixbuf_destroy(gpointer user_data, GObject* render)
 
 void fm_places_reload (void)
 {
-    //!!!!if (model) fm_places_model_reload (model);
+    //if (model) fm_places_model_reload (model);
 }
 
 /*----------------------------------------------------------------------
@@ -459,7 +459,6 @@ static gboolean on_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
 static void fm_places_view_dispose(GObject *object)
 {
     FmPlacesView* self;
-    printf ("places view dispose\n");
 
     g_return_if_fail(object != NULL);
     g_return_if_fail(FM_IS_PLACES_VIEW(object));
@@ -470,7 +469,6 @@ static void fm_places_view_dispose(GObject *object)
     {
         fm_places_model_free_separator (mod);
         fm_places_model_free_trash (mod);
-        printf ("count after frees %d\n", ((GObject*)mod)->ref_count);
     }
 
     if(self->dnd_dest)

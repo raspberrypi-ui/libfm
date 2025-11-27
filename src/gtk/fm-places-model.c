@@ -283,9 +283,7 @@ static void update_volume_or_mount(FmPlacesModel* model, FmPlacesItem* item, Gtk
         }
     }
 
-    int scale = 1;
-    if (model && model->view && GTK_IS_WIDGET (model->view)) scale = gtk_widget_get_scale_factor (model->view);
-    pix = fm_pixbuf_from_icon (item->icon, fm_config->pane_icon_size, scale);
+    pix = fm_pixbuf_from_icon(item->icon, fm_config->pane_icon_size, GTK_IS_WIDGET (model->view) ? gtk_widget_get_scale_factor (model->view) : 1);
     gtk_list_store_set(GTK_LIST_STORE(model), it, FM_PLACES_MODEL_COL_ICON, pix, FM_PLACES_MODEL_COL_LABEL, name, -1);
     g_object_unref(pix);
     g_free(name);
@@ -1129,7 +1127,7 @@ static void fm_places_model_init(FmPlacesModel *self)
 {
 }
 
-void fm_places_model_do_init(FmPlacesModel *self)
+void fm_places_model_do_init (FmPlacesModel *self)
 {
     GType types[] = {GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_POINTER};
     GtkTreeIter it;
@@ -1436,7 +1434,6 @@ static void fm_places_model_dispose(GObject *object)
 {
     FmPlacesModel *self;
     GtkTreeIter it;
-    printf ("places model dispose\n");
 
     g_return_if_fail(object != NULL);
     g_return_if_fail(FM_IS_PLACES_MODEL(object));
