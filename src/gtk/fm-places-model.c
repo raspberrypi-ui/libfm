@@ -703,6 +703,7 @@ static gboolean update_trash_item(gpointer user_data)
             gtk_tree_path_free(tp);
         }
     }
+    model->trash_idle_handler = 0;
     return FALSE;
 }
 
